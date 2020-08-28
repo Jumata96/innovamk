@@ -322,21 +322,21 @@
                     <span class="nav-text">Mensajes</span>
                   </a>                  
                 </li>
-                {{--  <li class="bold">
+                 <li class="bold">
                   <a class="collapsible-header  waves-effect waves-cyan">
                     <i class="material-icons">build</i>
-                    <span class="nav-text">Soporte Técnico</span>
+                    <span class="nav-text">Tecnicos</span>
                   </a>
                   <div class="collapsible-body">
                     <ul>
-                      <li><a href="{{ url('tickets') }}">
+                      <li><a href="{{ url('tecnicos') }}">
                         <i class="material-icons">keyboard_arrow_right</i>
-                        <span>Tickets</span>
+                        <span>Tecnicos</span>
                       </a>
                       </li>  
                     </ul>
                   </div>
-                </li>  --}}
+                </li> 
                 <li class="navigation-header">
                   <a class="navigation-header-text">Mas opciones</a>
                   <i class="navigation-header-icon material-icons">more_horiz</i>

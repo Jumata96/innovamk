@@ -4,6 +4,7 @@
       e.preventDefault();
 
       var data = $('#myForm').serializeArray();
+      console.log('se manda al ');
 
       $.ajax({
             url: "{{ url('/clientes/grabar') }}",
@@ -35,8 +36,7 @@
               } else {  
                 //var obj = $.parseJSON(data);  
                 window.location="{{ url('/clientes') }}";              
-               
-                // setTimeout("location.href='{{url('/clientes')}}'", 0000);
+                
               }
            },
            error:function(){ 

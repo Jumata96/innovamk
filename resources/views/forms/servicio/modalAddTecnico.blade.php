@@ -4,7 +4,9 @@
 		<h2>LISTA DE TECNICOS</h2>   
 	</div> 
 	<div class="row card-header sub-header"  >
+		
 		<div class="col s12 m12 herramienta">   
+				 
 			<center><h5>TECNICOS</h5></center>  
 		</div>  
 		@include('forms.scripts.modalInformacion')  

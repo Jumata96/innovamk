@@ -148,7 +148,7 @@ class ClientesController extends Controller
         } 
 
         $notificaciones = DB::table('notificaciones')
-            /* ->where('idservicio', $idservicio) */->get();
+            ->where('idservicio', $idservicio)->get();
 
         $tipo_documento = DB::table('documento')
             ->select('iddocumento', 'descripcion', 'dsc_corta')
@@ -235,18 +235,22 @@ class ClientesController extends Controller
             ->select('iddocumento', 'descripcion', 'dsc_corta')
             ->where('estado', '1')
             ->get();
+           
         $forma_pagos = DB::table('forma_pagos')
             ->select('idforma_pago', 'descripcion', 'dsc_corta')
             ->where('estado', '1')
             ->get();
+           
         $zonas = DB::table('zonas')
             ->select('id', 'nombre', 'dsc_corta')
             ->where('estado', '1')
             ->get();
         $tipo_documento_venta = DB::table('documento_venta')
             ->select('iddocumento', 'descripcion', 'dsc_corta')
-            ->where('estado', '1')
-            ->get();
+            ->where('estado', '1') 
+            ->where('es_proforma', 0)
+            ->get(); 
+     // dd($tipo_documento_venta);
         $moneda = DB::table('tipo_moneda')
             ->select('idmoneda', 'descripcion', 'dsc_corta')
             ->where('estado', '1')
@@ -272,7 +276,7 @@ class ClientesController extends Controller
      */
     public function store(Request $request)
     {
-      // dd($request);
+           // dd($request);
         $request->session()->flash('latitud' );
         $request->session()->flash('longitud' );
         $request->session()->flash('direccion' );
@@ -305,6 +309,8 @@ class ClientesController extends Controller
                 );
         }
 
+        
+
 
         if (count($validacion) === 0) {
             DB::table('validacion')
@@ -318,6 +324,8 @@ class ClientesController extends Controller
                 ->update(['valor' => 1]);
 
         } 
+
+        
         //dd($rules);
         $validator = Validator::make ( $request->all(), $rules );
 
@@ -328,63 +336,118 @@ class ClientesController extends Controller
             return response()->json($var);
         } 
 
-      
+       // dd('paso 3');
         if(count($usuario) > 0){
             if($request->parametro == 'NO'){  
-                DB::table('clientes')
-                ->where('nro_documento', strval($request->nro_documento))
-                ->update([ 
-                    'idempresa'     => $request->idempresa,
-                    'apaterno'      => $request->apaterno,
-                    'amaterno'      => $request->amaterno,
-                    'nombres'       => $request->nombres,
-                    'iddocumento'   => $request->iddocumento,
-                    'nro_documento' => $request->nro_documento,
-                    'direccion'     => $request->direccion,
-                    'latitud'       => $request->latitudF,
-                    'longitud'      => $request->longitudF,
-                    'idZonas'       =>$request->zonas, 
-                    'link_mapa'     => $request->link_mapa,
-                    'correo'        => $request->correo,
-                    'estado'        => 1,
-                    'telefono1'     => $request->telefono1,
-                    'telefono2'     => $request->telefono2,
-                    'forma_pago'    => $request->forma_pago,
-                    'doc_venta'     => $request->doc_venta,
-                    'moneda'        => $request->moneda,
-                    'dia_pago'      => $request->dia_pago,
-                    'contacto'      => $request->contacto,
-                    'idpersonal'    => Auth::user()->id,
-                    'razon_social'  => $request->apaterno . ' ' . $request->amaterno . ' ' . $request->nombres,
-                    'glosa'         => $request->glosa
-                ]);
-                 
-                DB::table('proforma')
-                ->where('nro_documento', strval($request->nro_documento))
-                ->update([ 
-                    'datos_Utilizado'      =>'SI',//   se utiliza  
-                ]);
-                if (!is_null($request->correo)) {
-                    DB::table('users')
-                    ->insert([
-                        //'id'              => $id,
-                        'nombre'            => $request->nombres,
-                        'apellidos'         => $request->apaterno.' '.$request->amaterno,
-                        'idtipo'            => 'CLE',
-                        'estado'            => 1,
-                        'email'             => $request->correo,
-                        'password'          => Hash::make($codigo),
-                        'usuario'           => $codigo,
-                        'nro_documento'     => $codigo,
-                        'cargo'             => 'CLIENTE',
-                        'avatar'            => null,
-                        'telefono'          => $request->telefono1,
-                        'glosa'             => $request->glosa,
-                        'created_at'        => date('Y-m-d h:m:s')
+              //  dd("ingreso a pam");
+ 
+                $proformas=DB::table('proforma')->where('nro_documento', strval($request->nro_documento))->get();
+               
+                if(count($proformas) > 0){ 
+                    DB::table('clientes')
+                    ->where('nro_documento', strval($request->nro_documento))
+                    ->update([ 
+                        'idempresa'     => $request->idempresa,
+                        'apaterno'      => $request->apaterno,
+                        'amaterno'      => $request->amaterno,
+                        'nombres'       => $request->nombres,
+                        'iddocumento'   => $request->iddocumento,
+                        'nro_documento' => $request->nro_documento,
+                        'direccion'     => $request->direccion,
+                        'latitud'       => $request->latitudF,
+                        'longitud'      => $request->longitudF,
+                        'idZonas'       =>$request->zonas, 
+                        'link_mapa'     => $request->link_mapa,
+                        'correo'        => $request->correo,
+                        'estado'        => 1,
+                        'telefono1'     => $request->telefono1,
+                        'telefono2'     => $request->telefono2,
+                        'forma_pago'    => $request->forma_pago,
+                        'doc_venta'     => $request->doc_venta,
+                        'moneda'        => $request->moneda,
+                        'dia_pago'      => $request->dia_pago,
+                        'contacto'      => $request->contacto,
+                        'idpersonal'    => Auth::user()->id,
+                        'razon_social'  => $request->apaterno . ' ' . $request->amaterno . ' ' . $request->nombres,
+                        'glosa'         => $request->glosa
+                    ]); 
+                    DB::table('proforma')
+                    ->where('nro_documento', strval($request->nro_documento))
+                    ->update([ 
+                        'datos_Utilizado'      =>'SI',//   se utiliza  
                     ]);
+    
+                    if (!is_null($request->correo)) {
+                        DB::table('users')
+                        ->insert([
+                            //'id'              => $id,
+                            'nombre'            => $request->nombres,
+                            'apellidos'         => $request->apaterno.' '.$request->amaterno,
+                            'idtipo'            => 'CLE',
+                            'estado'            => 1,
+                            'email'             => $request->correo,
+                            'password'          => Hash::make($codigo),
+                            'usuario'           => $codigo,
+                            'nro_documento'     => $codigo,
+                            'cargo'             => 'CLIENTE',
+                            'avatar'            => null,
+                            'telefono'          => $request->telefono1,
+                            'glosa'             => $request->glosa,
+                            'created_at'        => date('Y-m-d h:m:s')
+                        ]);
+     
+                    } 
+                }else{ 
+                    DB::table('clientes')
+                    ->insert([
+                        'idempresa'      => $request->idempresa,
+                        'estado'         => 1,
+                        'idcliente'      => $codigo,
+                        'apaterno'       => $request->apaterno,
+                        'amaterno'       => $request->amaterno,
+                        'nombres'        => $request->nombres,
+                        'iddocumento'    => $request->iddocumento,
+                        'nro_documento'  => $request->nro_documento,
+                        'direccion'      => $request->direccion, 
+                        'idZonas'      => $request->zonas,
+                        'latitud'     => $request->latitudC,
+                        'longitud'     => $request->longitudC,
+                        'link_mapa'      => $request->link_mapa,
+                        'correo'         => $request->correo,
+                        'telefono1'      => $request->telefono1,
+                        'telefono2'      => $request->telefono2,
+                        'forma_pago'     => (empty($request->forma_pago)) ? null : $request->forma_pago,
+                        'doc_venta'      => (empty($request->doc_venta)) ? null : $request->doc_venta,
+                        'moneda'         => (empty($request->moneda)) ? null : $request->moneda,
+                        'dia_pago'       => (empty($request->dia_pago)) ? null : $request->dia_pago,
+                        'contacto'       => (empty($request->contacto)) ? null : $request->contacto,
+                        'idpersonal'     => Auth::user()->id,
+                        'razon_social'   => $request->apaterno . ' ' . $request->amaterno . ' ' . $request->nombres,
+                        'glosa'          => (empty($request->glosa)) ? null : $request->glosa,
+                        'fecha_creacion' => date('Y-m-d h:m:s'),
+                    ]); 
+            if (!is_null($request->correo)) {
+                DB::table('users')
+                ->insert([
+                    //'id'              => $id,
+                    'nombre'            => $request->nombres,
+                    'apellidos'         => $request->apaterno.' '.$request->amaterno,
+                    'idtipo'            => 'CLE',
+                    'estado'            => 1,
+                    'email'             => $request->correo,
+                    'password'          => Hash::make($codigo),
+                    'usuario'           => $codigo,
+                    'nro_documento'     => $codigo,
+                    'cargo'             => 'CLIENTE',
+                    'avatar'            => null,
+                    'telefono'          => $request->telefono1,
+                    'glosa'             => $request->glosa,
+                    'created_at'        => date('Y-m-d h:m:s')
+                ]);
+            }
 
-                // 'datos_Utilizado'      =>'NO',,// 1 -> se utiliza 
-                } 
+                }
+             
                 
             } 
         }else {
@@ -437,8 +500,8 @@ class ClientesController extends Controller
             }
 
         }
-         
-       // return redirect('/clientes');
+        /* dd('grabo 3'); */
+        return redirect('/clientes');
     }
 
     public function storeServicio(Request $request)
@@ -679,7 +742,7 @@ class ClientesController extends Controller
         DB::table('clientes')
             ->where('idcliente', strval($request->idcliente))
             ->update([
-                'idcliente'     =>  (is_null($request->nro_documento))? $request->idcliente : $request->nro_documento,
+                
                 'idempresa'     => $request->idempresa,
                 'apaterno'      => $request->apaterno,
                 'amaterno'      => $request->amaterno,

@@ -94,17 +94,17 @@
                               </div>  
                               <div class="input-field col s12 m6 l6">
                                 <i class="material-icons prefix">maps_local</i>
-                                <input id="latitudF" name="latitudF" type="text" value="{{ $datos->latitud }}" readonly="readonly">
+                                <input id="latitudF" placeholder="" name="latitudF" type="text" value="{{ $datos->latitud }}" readonly="readonly">
                                 <label for="latitudF">Incorporar latitud</label>
                               </div>
                               <div class="input-field col s12 m6 l6">
                                 <i class="material-icons prefix">maps_local</i>
-                                <input id="longitudF" name="longitudF" type="text" value="{{ $datos->longitud }}" readonly="readonly" >
+                                <input id="longitudF" placeholder="" name="longitudF" type="text" value="{{ $datos->longitud }}" readonly="readonly" >
                                 <label for="longitudF">Incorporar longitud</label>
                               </div>
                               <div class="input-field col s12 m6 l12">
                                 <i class="material-icons prefix">room</i>
-                                <input id="direccion"  readonly="readonly" name="direccion" type="text" value="{{ $datos->direccion }}">
+                                <input id="direccion" placeholder=""  readonly="readonly" name="direccion" type="text" value="{{ $datos->direccion }}">
                                 <label for="direccion">Dirección</label>
                               </div>
 
@@ -238,14 +238,14 @@
 
   
 
-                            {{--  <div class="col s12 m5 l3 bordes" style="padding-left: 5px">
-                                <ul id="task-card" class="collection with-header" style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);" >  --}}
+                             <div class="col s12 m5 l3 bordes" style="padding-left: 5px">
+                                <ul id="task-card" class="collection with-header" style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);" > 
                                     
                                     @if(count($servicio) > 0)
                                       @foreach($servicio as $ser)
                                         @foreach ($notificaciones as $val)
                                           @if ($ser->idservicio==$val->idservicio)
-                                          <ul id="task-card" class="collection with-header" style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);" >
+                                          {{-- <ul id="task-card" class="collection with-header" style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);" > --}}
                                               <li class="collection-header cyan">
                                                 <h4 class="task-card-title">Resumen</h4>
                                                 <p class="task-card-date">Notificaciones</p>
@@ -305,14 +305,14 @@
                                                   </span></a>
                                                   
                                               </li>
-                                         </ul>
+                                         {{-- </ul> --}}
                                         @endif
                                             
                                       @endforeach
                                       @endforeach
                                     @else
                                     
-                                    <ul id="task-card" class="collection with-header" style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);" >
+                                    {{-- <ul id="task-card" class="collection with-header" style="box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);" > --}}
                                         <li class="collection-header cyan">
                                           <h4 class="task-card-title">Resumen</h4>
                                           <p class="task-card-date">Notificaciones</p>
@@ -350,12 +350,12 @@
                                             </span></a>
                                             
                                         </li>
-                                      </ul>
+                                      {{-- </ul> --}}
                                     @endif
                                    
                                     
                                     
-                                {{--  </ul>  --}}
+                                 </ul> 
                             </div>
 
                             @if(!is_null($datos->longitud ))

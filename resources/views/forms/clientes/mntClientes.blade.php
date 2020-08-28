@@ -96,17 +96,17 @@
                                  
                             <div class="input-field col s12 m6 l6" readonly="readonly">
                               <i class="material-icons prefix">maps_local</i>
-                              <textarea id="latitudC" name="latitudC" class="materialize-textarea" readonly="readonly"></textarea>
+                              <textarea id="latitudC" placeholder=""  name="latitudC" class="materialize-textarea" readonly="readonly"></textarea>
                               <label for="latitudC" class="">Latitud</label>
                             </div> 
                             <div class="input-field col s12 m6 l6" readonly="readonly">
                               <i class="material-icons prefix">maps_local</i>
-                              <textarea id="longitudC" name="longitudC" class="materialize-textarea" readonly="readonly" ></textarea>
+                              <textarea id="longitudC"  placeholder=""  name="longitudC" class="materialize-textarea" readonly="readonly" ></textarea>
                               <label for="longitudC" class="">Longitud</label>
                             </div> 
                             <div class="input-field col s12 m12 l12"  >
                               <i class="material-icons prefix">room</i>
-                              <input id="direccion" name="direccion" type="text" readonly="readonly">
+                              <input id="direccion" placeholder=""  name="direccion" type="text" readonly="readonly">
                               <label for="direccion">Dirección</label>
                               <div id="error6" style="color: red; font-size: 12px; font-style: italic; padding-left: 3rem"></div>
                             </div>
