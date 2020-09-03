@@ -90,38 +90,30 @@ class proformaController extends Controller
     }
     public function store(Request $request)
     { 
-        
-        $request->session()->flash('latitud' );
-        $request->session()->flash('longitud' );
-        $request->session()->flash('direccion' );
-        //dd($request);
+       // dd($request); 
 
-        $idusu      = Auth::user()->id;
-        $key = new MaestroController();
-        $codigo = null;
-        $codigo = $key->codigoN(10);  
-        $prodormaId = $key->codigoN(10);  
-        $dias=15;
-        $fecha_inicio = Carbon::now();
-        $fecha_fin = Carbon::now()->addDays($dias)->subDays(0);
 
-        $documento_venta = DB::table('documento_venta') 
-            ->where('es_proforma',1)->get();
-        foreach ($documento_venta as $doc) {
-            $iddocumento =$doc->iddocumento;
-            $serie =$doc->serie;
-            $correlativo =$doc->correlativo+1 ;
-        } 
-        //dd(str_pad($correlativo, 8, "0", STR_PAD_LEFT));
-        //dd($fecha_fin); 
-        //dd($request);  
-            $rules = array( 
-            'iddocumentoPro' => 'required', 
-            'nro_documentoPro' => 'required|max:50', 
-            'apaternoPro'      => 'required|max:50',
-            'amaternoPro'      => 'required|max:50',
-            'nombresPro'       => 'required|string|max:50' 
-            );
+                if($request->parametro == 'NO'){ 
+                    $rules = array( 
+                             'iddocumentoPro' => 'required',
+                             'descripcionPro'   => 'required',
+                            'nro_documentoPro' => 'required|max:50', 
+                            'apaternoPro'      => 'required|max:50',
+                            'amaternoPro'      => 'required|max:50',
+                            'nombresPro'       => 'required|string|max:50' ,
+                              
+                                   
+                    );  
+                }else{
+                    
+                        $rules = array(    
+                            'descripcionPro'   => 'required',  
+                            
+                            'apaternoPro'      => 'required|max:50',
+                            'amaternoPro'      => 'required|max:50',
+                            'nombresPro'       => 'required|string|max:50'           
+                        );
+                }  
             $validator = Validator::make ( $request->all(), $rules );
     
             if ($validator->fails()){
@@ -129,6 +121,28 @@ class proformaController extends Controller
                 array_push($var, 'error');
                 //return response::json(array('errors'=> $validator->getMessageBag()->toarray()));
                 return response()->json($var);
+            } 
+
+            $request->session()->flash('latitud' );
+            $request->session()->flash('longitud' );
+            $request->session()->flash('direccion' );
+            //dd($request);
+    
+            $idusu      = Auth::user()->id;
+            $key = new MaestroController();
+            $codigo = null;
+            $codigo = $key->codigoN(10);  
+            $prodormaId = $key->codigoN(10);  
+            $dias=15;
+            $fecha_inicio = Carbon::now();
+            $fecha_fin = Carbon::now()->addDays($dias)->subDays(0);
+    
+            $documento_venta = DB::table('documento_venta') 
+                ->where('es_proforma',1)->get();
+            foreach ($documento_venta as $doc) {
+                $iddocumento =$doc->iddocumento;
+                $serie =$doc->serie;
+                $correlativo =$doc->correlativo+1 ;
             } 
 
             $usuario = DB::table('users')
@@ -158,8 +172,7 @@ class proformaController extends Controller
                 'longitud'     => $request->longituPro, 
             ]); 
             DB::table('proforma') 
-            ->insert([
-
+            ->insert([ 
                 'idempresa'             => $idempresa,
                  'codigo'               => $prodormaId ,
                  'fecha_emision'        => $fecha_inicio,
@@ -171,12 +184,10 @@ class proformaController extends Controller
                  'idusuario'            => $idusu, 
                  'fecha_creacion'       => date('Y-m-d h:m:s'),
                  'estado'               => 1, 
-                 'datos_Utilizado'      =>'NO',//  -> no se utiliza 
+                 'datos_Utilizado'      =>'NO',// 
                  'descripcion'          => $request->descripcionPro, 
                  'serie'                => $serie, 
                  'numero'               => str_pad($correlativo, 8, "0", STR_PAD_LEFT),  
-
-
                  
             ]); 
             DB::table('documento_venta')
