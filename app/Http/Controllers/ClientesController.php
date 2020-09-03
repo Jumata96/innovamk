@@ -281,6 +281,7 @@ class ClientesController extends Controller
         $request->session()->flash('longitud' );
         $request->session()->flash('direccion' );
         $idusu      = Auth::user()->id;
+        $usuarioCreado =null;
         $validacion = DB::table('validacion')->where('idusuario', $idusu)->get();
         $key = new MaestroController();
         $codigo = null;
@@ -288,29 +289,23 @@ class ClientesController extends Controller
 
          
 
-        if($request->parametro == 'NO'){
-                //$codigo = $request->nro_documento;
-            $usuario = DB::table('users')->where('nro_documento', $request->codigo)->get();
-
+        if($request->parametro == 'NO'){ 
                 $rules = array(      
                     'idempresa'     => 'required',
                     'nro_documento' => 'required|max:50',
                     'apaterno'      => 'required|max:50',
                     'amaterno'      => 'required|max:50',
                     'nombres'       => 'required|string|max:50'            
-                ); 
+                );  
         }else{
-            $usuario = DB::table('users')->where('idcliente', $request->codigo)->get();
+            
                 $rules = array(      
                     'idempresa'     => 'required',
                     'apaterno'      => 'required|max:50',
                     'amaterno'      => 'required|max:50',
                     'nombres'       => 'required|max:50'            
                 );
-        }
-
-        
-
+        } 
 
         if (count($validacion) === 0) {
             DB::table('validacion')
@@ -323,10 +318,7 @@ class ClientesController extends Controller
                 ->where('idusuario', strval($idusu))
                 ->update(['valor' => 1]);
 
-        } 
-
-        
-        //dd($rules);
+        }  
         $validator = Validator::make ( $request->all(), $rules );
 
         if ($validator->fails()){
@@ -335,14 +327,9 @@ class ClientesController extends Controller
             //return response::json(array('errors'=> $validator->getMessageBag()->toarray()));
             return response()->json($var);
         } 
-
-       // dd('paso 3');
-        if(count($usuario) > 0){
-            if($request->parametro == 'NO'){  
-              //  dd("ingreso a pam");
  
-                $proformas=DB::table('proforma')->where('nro_documento', strval($request->nro_documento))->get();
-               
+        if($request->parametro == 'NO'){  
+            $proformas=DB::table('proforma')->where('nro_documento', strval($request->nro_documento))->get(); 
                 if(count($proformas) > 0){ 
                     DB::table('clientes')
                     ->where('nro_documento', strval($request->nro_documento))
@@ -375,37 +362,18 @@ class ClientesController extends Controller
                     ->where('nro_documento', strval($request->nro_documento))
                     ->update([ 
                         'datos_Utilizado'      =>'SI',//   se utiliza  
-                    ]);
-    
-                    if (!is_null($request->correo)) {
-                        DB::table('users')
-                        ->insert([
-                            //'id'              => $id,
-                            'nombre'            => $request->nombres,
-                            'apellidos'         => $request->apaterno.' '.$request->amaterno,
-                            'idtipo'            => 'CLE',
-                            'estado'            => 1,
-                            'email'             => $request->correo,
-                            'password'          => Hash::make($codigo),
-                            'usuario'           => $codigo,
-                            'nro_documento'     => $codigo,
-                            'cargo'             => 'CLIENTE',
-                            'avatar'            => null,
-                            'telefono'          => $request->telefono1,
-                            'glosa'             => $request->glosa,
-                            'created_at'        => date('Y-m-d h:m:s')
-                        ]);
-     
-                    } 
+                    ]); 
+                    
                 }else{ 
+                   
                     DB::table('clientes')
                     ->insert([
                         'idempresa'      => $request->idempresa,
                         'estado'         => 1,
                         'idcliente'      => $codigo,
-                        'apaterno'       => $request->apaterno,
-                        'amaterno'       => $request->amaterno,
-                        'nombres'        => $request->nombres,
+                        'apaterno'       => strtoupper ($request->apaterno),
+                        'amaterno'       => strtoupper ($request->amaterno),
+                        'nombres'        => strtoupper ($request->nombres),
                         'iddocumento'    => $request->iddocumento,
                         'nro_documento'  => $request->nro_documento,
                         'direccion'      => $request->direccion, 
@@ -422,35 +390,40 @@ class ClientesController extends Controller
                         'dia_pago'       => (empty($request->dia_pago)) ? null : $request->dia_pago,
                         'contacto'       => (empty($request->contacto)) ? null : $request->contacto,
                         'idpersonal'     => Auth::user()->id,
-                        'razon_social'   => $request->apaterno . ' ' . $request->amaterno . ' ' . $request->nombres,
+                        'razon_social'   => strtoupper ($request->apaterno . ' ' . $request->amaterno . ' ' . $request->nombres),
                         'glosa'          => (empty($request->glosa)) ? null : $request->glosa,
                         'fecha_creacion' => date('Y-m-d h:m:s'),
-                    ]); 
-            if (!is_null($request->correo)) {
-                DB::table('users')
-                ->insert([
-                    //'id'              => $id,
-                    'nombre'            => $request->nombres,
-                    'apellidos'         => $request->apaterno.' '.$request->amaterno,
-                    'idtipo'            => 'CLE',
-                    'estado'            => 1,
-                    'email'             => $request->correo,
-                    'password'          => Hash::make($codigo),
-                    'usuario'           => $codigo,
-                    'nro_documento'     => $codigo,
-                    'cargo'             => 'CLIENTE',
-                    'avatar'            => null,
-                    'telefono'          => $request->telefono1,
-                    'glosa'             => $request->glosa,
-                    'created_at'        => date('Y-m-d h:m:s')
-                ]);
-            }
+                    ]);  
+                } 
+                if (!is_null($request->correo)) {
+                    DB::table('users')
+                    ->insert([
+                        //'id'              => $id,
+                        'nombre'            => $request->nombres,
+                        'apellidos'         => $request->apaterno.' '.$request->amaterno,
+                        'idtipo'            => 'CLE',
+                        'estado'            => 1,
+                        'email'             => $request->correo,
+                        'password'          => Hash::make( $request->nro_documento),
+                        'usuario'           =>  $request->nro_documento,
+                        'nro_documento'     => $request->nro_documento,
+                        'cargo'             => 'CLIENTE',
+                        'avatar'            => null,
+                        'telefono'          => $request->telefono1,
+                        'glosa'             => $request->glosa,
+                        'created_at'        => date('Y-m-d h:m:s')
+                    ]);
+                    DB::table('clientes')
+                    ->where('nro_documento',$request->nro_documento)
+                    ->update([
+                        'usu_cpanel'      => 1,
+                        'usuario_cpanel'  =>   $request->nro_documento,
+                        'contra_cpanel'   =>   $request->nro_documento
+                    ]);
+                    $usuarioCreado='true';
 
-                }
-             
-                
-            } 
-        }else {
+                } 
+        }else{
             DB::table('clientes')
             ->insert([
                 'idempresa'      => $request->idempresa,
@@ -459,7 +432,7 @@ class ClientesController extends Controller
                 'apaterno'       => $request->apaterno,
                 'amaterno'       => $request->amaterno,
                 'nombres'        => $request->nombres,
-                'iddocumento'    => $request->iddocumento,
+                // 'iddocumento'    => $request->iddocumento,
                 'nro_documento'  => $codigo,
                 'direccion'      => $request->direccion, 
                 'idZonas'      => $request->zonas,
@@ -497,11 +470,21 @@ class ClientesController extends Controller
                     'glosa'             => $request->glosa,
                     'created_at'        => date('Y-m-d h:m:s')
                 ]);
+                DB::table('clientes')
+                    ->where('idcliente',$codigo)
+                    ->update([
+                        'usu_cpanel'      => 1,
+                        'usuario_cpanel'  =>  $codigo,
+                        'contra_cpanel'   =>  $codigo
+                    ]);
+                    $usuarioCreado='true';
             }
 
         }
-        /* dd('grabo 3'); */
-        return redirect('/clientes');
+       
+          
+        $datos['registroUsuario'] = $usuarioCreado; 
+        return response()->json($datos);
     }
 
     public function storeServicio(Request $request)

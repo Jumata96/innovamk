@@ -32,10 +32,12 @@
   var focus = 0;
 
   $("#nro_documento").focusout(function() {
-    focus++;
-    console.log(focus);
-
     var data = $(this).val();
+    
+
+    if(data != ""){ 
+        focus++; 
+        
 
           $.ajax({
               url: "{{ url('/cliente/verificarID') }}",
@@ -96,8 +98,7 @@
                         });  
                       //cancelar 
                       $("#cancelarDatos").click(function(){
-                        $('#nro_documento').val('');
-                        $('#nro_documento').focus();
+                        $('#nro_documento').val(''); 
                       });
                     });   
                     $("#cancelarVerificacion").click(function(){
@@ -111,6 +112,7 @@
                 alert("error!!!!");
           }
           });
+    }
         
   });
 

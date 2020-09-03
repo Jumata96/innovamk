@@ -1,4 +1,4 @@
-<div id="vwNewConcepto{{ $valor->codigo }}" class="modal modal-fixed-footer" style="height: 100%; overflow: hidden;">
+<div id="vwNewConcepto{{ $valor->codigo }}" class="modalConcepto modal modal-fixed-footer" style="height: 100%; overflow: hidden;">
 	<div class="modal-content" style="padding: 0px; overflow-y: disabled; height: 300%; background-color: #f9f9f9">
 							  
 							  <div class="card" style="position: fixed; width: 100%; z-index: 2">                 

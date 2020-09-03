@@ -173,7 +173,7 @@
 										<td style="text-align: center;width:85px;border: solid;">{{ $dfac->idconcepto }}</td>
 										<td style="text-align: center;width:80px;border: solid;">{{ $dfac->cantidad}}</td>
 										<td style="text-align: center;width:85px;border: solid;">UNID.</td>
-										<td style="text-align: left;font-size:85%;border: solid;"  >
+										<td style="text-align: left;font-size:70%;border: solid;"  >
 												{{ $dfac->descripcion }}									 
 										</td> 
 										

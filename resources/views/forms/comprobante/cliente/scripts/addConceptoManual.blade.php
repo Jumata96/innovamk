@@ -8,7 +8,7 @@
 			//$('#descripcionAddConceptoM').val(value) /// guardamos en la variable
 
 			var data = $('#FormNewComceptoManual').serializeArray();
-			console.log(data);
+		 
 			$.ajax({
 				url: "{{ url('/comprobante/grabarConceptoManual') }}",
 				type:"POST",
@@ -47,17 +47,16 @@
 							 $('.subtotal_neto2').val(data.subTotalNeto);
 							 $('#impuesto').val('0');
 							 $('.total2').val(data.subTotal);  
-							 $(".total1"+data.facturaId).val(data.subTotal);    
-
-
-								 
+							 $(".total1"+data.facturaId).val(data.subTotal);   
+							 M.toast({ html: '<span>Registro exitoso</span>'});
+							 $('.modalConcepto').modal('close');  
 
 						 }
 
 
 							 
-						//M.toast({ html: '<span>Registro exitoso</span>'});
-						//	window.location = "{{ url('/proformas') }} "; 
+						//
+					 
 					},
 		
 					error:function(){ 

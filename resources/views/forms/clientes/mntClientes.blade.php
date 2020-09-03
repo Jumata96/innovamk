@@ -77,7 +77,7 @@
                             </div>        
                             <div class="input-field col s12 m6 l6">
                               <i class="material-icons prefix">perm_identity</i>
-                              <input id="apaterno" name="apaterno" type="text" data-error=".errorTxt3">
+                              <input id="apaterno" name="apaterno" type="text" data-error=".errorTxt3" onkeyup="mayus(this);>
                               <label for="apaterno">Apellido Paterno</label>
                               <div id="error3" style="color: red; font-size: 12px; font-style: italic; padding-left: 3rem"></div>
                             </div>

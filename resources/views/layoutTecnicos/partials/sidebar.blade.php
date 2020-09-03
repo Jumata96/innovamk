@@ -52,7 +52,7 @@
                   </ul>
                 </li> 
                 <li class="bold">
-                  <a class=" waves-effect waves-cyan" href="{{ url('#') }}">
+                  <a class=" waves-effect waves-cyan" href="{{ url('/instalaciones/tecnico/listado') }}">
                     <i class="material-icons">highlight_off</i>
                     <span class="nav-text">Instalaciones</span>
                   </a>                  

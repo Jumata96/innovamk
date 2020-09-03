@@ -3,8 +3,7 @@
     $('#add').click(function(e){
       e.preventDefault();
 
-      var data = $('#myForm').serializeArray();
-      console.log('se manda al ');
+      var data = $('#myForm').serializeArray(); 
 
       $.ajax({
             url: "{{ url('/clientes/grabar') }}",
@@ -21,7 +20,7 @@
            data:data,
 
            success:function(data){
-              console.log(data);
+              // console.log(data);
               if ( data[0] == "error") {
                 ( typeof data.iddocumento != "undefined" )? $('#error1').text(data.iddocumento) : null;
                 ( typeof data.nro_documento != "undefined" )? $('#error2').text(data.nro_documento) : null;
@@ -33,10 +32,18 @@
                 ( typeof data.doc_venta != "undefined" )? $('#error8').text(data.doc_venta) : null;
                 ( typeof data.moneda != "undefined" )? $('#error9').text(data.moneda) : null;
                 ( typeof data.idempresa != "undefined" )? $('#error10').text(data.idempresa) : null;
-              } else {  
-                //var obj = $.parseJSON(data);  
+              } else {
+                M.toast({ html: '<span>Registro exitoso</span>'});
+
+                if(data.registroUsuario=='true'){
+                  M.toast({ html: '<span>Se registro usuario del cliente.</span>'}); 
+                  setTimeout(function () {
+                      window.location.href = "{{ url('/clientes') }}";  
+                    }, 3000);
+
+                }else{
                 window.location="{{ url('/clientes') }}";              
-                
+                }
               }
            },
            error:function(){ 

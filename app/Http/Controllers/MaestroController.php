@@ -841,9 +841,12 @@ class MaestroController extends Controller
       $email = 'innovamk@innovatec.me';
       $cont = 0;      
       $clientes = DB::table('clientes')->where('usu_cpanel',0)->orWhereNull('usu_cpanel')->get();
+     // dd($clientes);
 
       foreach ($clientes as $datos) {            
         $usuario = DB::table('users')->where('usuario',$datos->idcliente)->orWhere('usuario',$datos->correo)->get();
+
+       
 
         if (count($usuario) == 0) {
           $cont++;

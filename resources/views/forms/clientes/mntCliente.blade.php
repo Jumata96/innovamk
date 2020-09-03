@@ -185,13 +185,16 @@
                                       <input id="precio" name="precio" type="text" value="No registrado" disabled="">
                                     @endif
                                     <label for="precio">Monto</label>
-                                  </div>                        
+                                  </div> 
+                                  
+                                  @if($datos->usu_cpanel=='1')
+
+                                  @endif
                                 </div> 
                                 
                               </div>
                         </div>
-        </div>
-
+        </div> 
         <div class="col s12 ">                        
                   
                     <div class="card" style="margin-left: 20px; margin-right: 20px">

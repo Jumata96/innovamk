@@ -168,6 +168,23 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('/servicio/desabilitar','ServicioController@disabled');
 	Route::post('/servicio/habilitar','ServicioController@habilitar');
 	Route::post('/getQueues','MaestroController@getQueues');
+	//instalaciones
+	Route::get('/instalaciones','InstalacionesController@index');
+	Route::get('/instalaciones/nuevo','InstalacionesController@create');  
+
+	Route::get('/instalaciones/tecnico/listado','InstalacionesController@instalacionesPorTecnico');
+	Route::get('/instalaciones/tecnicos/mostrar/{id}','InstalacionesController@show_tecnicos');
+
+
+	
+
+
+	Route::get('/instalaciones/detalle/{id}','ServicioController@detalleInstalacion');
+
+
+	
+
+
 	//Notificaciones
 	Route::post('/notificaciones/actualizar','ServicioController@updateNotificaciones');
 	Route::post('/notificacion/activar','ServicioController@activar');
@@ -288,6 +305,10 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('/pagos/grabar','PagosController@store');
 	Route::get('/reporte-pagos','PagosController@lstReporte');
 	Route::post('/reportePagos','PagosController@reportePagos');
+	//promesas 
+	Route::get('/promesas','PromesasController@index');
+	Route::get('/promesas/detalle/{id}','PromesasController@show');
+	Route::post('/promesas/grabar','PromesasController@store'); 
 	
 	//MAESTROS
 	Route::post('/ip/pool','MaestroController@getPoolIp');  //Retorna el POOL de IPs del Mikrotik

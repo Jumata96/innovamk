@@ -129,7 +129,7 @@
                                                   <input id="contrasena_cliente" name="contrasena_cliente" type="text">
                                                   <label for="contrasena_cliente">Contraseña</label>
                                                 </div>         
-                                                <div class="input-field col s12 s12 m6 l6">
+                                              {{--   <div class="input-field col s12 s12 m6 l6">
                                                   <i class="material-icons prefix">place</i>
                                                   <input id="direccion" name="direccion" type="text">
                                                   <label for="direccion">Dirección</label>
@@ -139,7 +139,7 @@
                                                   <i class="material-icons prefix">my_location</i>
                                                   <input id="Coordenadas" name="coordenadas" type="text">
                                                   <label for="coordenadas">Coordenadas</label>
-                                                </div>     
+                                                </div>    --}}  
                                                 <div class="input-field col s12 s12 m6 l6" >
                                                   <i class="material-icons prefix">settings_ethernet</i>
                                                   <input id="ip" name="ip" type="text" placeholder="" disabled>
@@ -150,7 +150,37 @@
                                                   <i class="material-icons prefix">blur_linear</i>
                                                   <input id="mac" name="mac" type="text">
                                                   <label for="mac">MAC</label>
-                                                </div>                        
+                                                </div> 
+                                                <div class="input-field col s12 m6 l6" readonly="readonly">
+                                                  <i class="material-icons prefix">maps_local</i>
+                                                  <textarea id="latitudC" placeholder=""  name="latitudC" class="materialize-textarea" readonly="readonly"></textarea>
+                                                  <label for="latitudC" class="">Latitud</label>
+                                                </div> 
+                                                <div class="input-field col s12 m6 l6" readonly="readonly">
+                                                  <i class="material-icons prefix">maps_local</i>
+                                                  <textarea id="longitudC"  placeholder=""  name="longitudC" class="materialize-textarea" readonly="readonly" ></textarea>
+                                                  <label for="longitudC" class="">Longitud</label>
+                                                </div> 
+                                                <div class="input-field col s12 m12 l12"  >
+                                                  <i class="material-icons prefix">room</i>
+                                                  <input id="direccion" placeholder=""  name="direccion" type="text" readonly="readonly">
+                                                  <label for="direccion">Dirección</label>
+                                                  <div id="error6" style="color: red; font-size: 12px; font-style: italic; padding-left: 3rem"></div>
+                                                </div>
+                    
+                                                
+                                                <div class="col s12"> 
+                                                  <a type="button" class="waves-effect waves-light btn modal-trigger gradient-45deg-indigo-blue col s12" href="#modalCreate1" id="modalClienteDir"  style="height: 44px; letter-spacing: .5px; padding-top: 0.3rem;"   >AGREGAR  Dirección</a>
+                                                  @include('forms.clientes.mapa.mapsClienteCreate')
+                                                </div>
+
+
+
+
+
+
+
+                                                                       
                                               </div>     
                                             </div>
                     </div>
@@ -241,7 +271,7 @@
                                                       <div class="col s12 m6 l5 center"> 
                                                         @include('forms.servicio.modalAddTecnico')
                                                         <br>
-                                                        <a href="#modalAddTecnico" class="btn-floating  modal-trigger waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" data-tooltip="Exportar">
+                                                        <a href="#modalAddTecnico" class="btn-floating  modal-trigger waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" data-tooltip="Agregar Tecnico">
                                                           <i class="material-icons" style="color: #2E7D32">add</i></a>
 
                                                       </div>
@@ -277,5 +307,6 @@
 @endsection
 
 @section('script')
+@include('forms.servicio.scripts.obtenerUbicacion')  
   @include('forms.servicio.scripts.addServicio')  
 @endsection

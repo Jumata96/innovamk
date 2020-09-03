@@ -211,13 +211,15 @@
 			
 				  success:function(data){
 					  
-					  if ( data[0] == "error") { 
-
+					  if ( data[0] == "error") {  
+						  M.toast({ html: '<span>Revisar campos obligatorios</span>'}); 
 						( typeof data.iddocumentoPro != "undefined" )? $('#error1').text(data.iddocumentoPro) && $('#iddocumentoPro').focus() : null;
 						 ( typeof data.nro_documentoPro != "undefined" )? $('#error2').text(data.nro_documentoPro) : null;
 						 ( typeof data.apaternoPro != "undefined" )? $('#error3').text(data.apaternoPro) : null; 
 						 ( typeof data.amaternoPro != "undefined" )? $('#error4').text(data.amaternoPro) : null;
 						 ( typeof data.nombresPro != "undefined" )? $('#error5').text(data.nombresPro) : null;  
+						 ( typeof data.descripcionPro != "undefined" )? $('#error10').text(data.descripcionPro) : null;  
+
 					  } else {   
 						  var clienteId=data.clienteId;
 						  var empresaId=data.empresaId;
@@ -364,6 +366,8 @@
 			  });  
 			}else{
 				limpiarTabla();
+				M.toast({ html: '<span>No se ingreso Conceptos</span>'});
+
 				$("#tableProformaDetalle").append( 
 					'<tr  >'+ 
 						'<td colspan="6" style="text-align: center; text: red;" > <H5 style="color: red;">'+

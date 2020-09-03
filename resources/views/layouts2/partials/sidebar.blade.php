@@ -33,7 +33,7 @@
           </a>
         </h1>
       </div>
-      <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed" id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
+      <ul class="sidenav sidenav-collapsible leftside-navigation collapsible sidenav-fixed " id="slide-out" data-menu="menu-navigation" data-collapsible="menu-accordion">
         
                 <li class="bold">
                   <a class="collapsible-header waves-effect waves-cyan">
@@ -332,6 +332,11 @@
                       <li><a href="{{ url('tecnicos') }}">
                         <i class="material-icons">keyboard_arrow_right</i>
                         <span>Tecnicos</span>
+                      </a>
+                      </li>  
+                      <li><a href="{{ url('instalaciones') }}">
+                        <i class="material-icons">keyboard_arrow_right</i>
+                        <span>Instalaciones</span>
                       </a>
                       </li>  
                     </ul>

@@ -73,7 +73,10 @@
         var usuario_cliente = $("input[name=usuario_cliente]").val();
         var contrasena_cliente = $("input[name=contrasena_cliente]").val();
         var direccion = $("input[name=direccion]").val();
-        var coordenadas = $("input[name=coordenadas]").val();
+       /*  var coordenadas = $("input[name=coordenadas]").val(); */
+        var latitud = $("text[name=latitudC]").val(); 
+        var longitud = $("text[name=longitudC]").val();
+
         var ip = $("input[name=ip]").val();
         var mac = $("input[name=mac]").val();
         var fecha_instalacion = $("input[name=fecha_instalacion]").val();
@@ -112,8 +115,9 @@
               perfil_internet:perfil_internet,
               usuario_cliente:usuario_cliente,
               contrasena_cliente:contrasena_cliente,
-              direccion:direccion,
-              coordenadas:coordenadas,
+              direccion:direccion, 
+              latitud:latitud,
+              longitud:longitud ,
               ip:ip,
               mac:mac,
               fecha_instalacion:fecha_instalacion,
@@ -147,8 +151,8 @@
 
                 var obj = $.parseJSON(data);
 
-                window.location="{{ url('/cliente') }}/{{$idcliente}}"; 
-                M.toast({ html: '<span>Registro exitoso</span>'});
+                /* window.location="{{ url('/cliente') }}/{{$idcliente}}"; 
+                M.toast({ html: '<span>Registro exitoso</span>'}); */
 						  
                 
                 //alert(data.success);

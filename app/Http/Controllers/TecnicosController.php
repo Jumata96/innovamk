@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 use DB; 
 use Validator; 
 
@@ -70,7 +72,8 @@ class TecnicosController extends Controller
         } else {  
            // dd($idTecnico);
             // dd($request);   
-            DB::table('tecnicos')->insert([
+            DB::table('tecnicos')
+            ->insert([
                 'idtecnico'           => $idTecnico, 
                 'idempresa'           => $request->idempresa,
                 'nombre'              => strtoupper ($request->nombres ),
@@ -90,7 +93,30 @@ class TecnicosController extends Controller
                 'descripcion'         => $request->glosa,
                 'fecha_Creacion'      => date('Y-m-d h:m:s'),
                 'idZona'              => $request->zonas, 
+                'usu_cpanel'          =>1,
+                'usuario_cpanel'      =>$request->nro_documento,
+                'contra_cpanel'       =>$request->nro_documento
                 ]);
+
+                if (!is_null($request->correo)) {
+                    DB::table('users')
+                    ->insert([
+                        //'id'              => $id,
+                        'nombre'            =>  strtoupper ($request->nombres ),
+                        'apellidos'         => strtoupper ($request->apaterno.' '.$request->amaterno),
+                        'idtipo'            => 'TEC',
+                        'estado'            => 1,
+                        'email'             => $request->correo,
+                        'password'          => Hash::make( $request->nro_documento),
+                        'usuario'           =>  $request->nro_documento,
+                        'nro_documento'     => $request->nro_documento,
+                        'cargo'             => 'CLIENTE',
+                        'avatar'            => null,
+                        'telefono'          => $request->telefono1,
+                        'glosa'             => $request->glosa,
+                        'created_at'        => date('Y-m-d h:m:s')
+                    ]);
+                }
 
             return response()->json("conforme");
         }
@@ -171,9 +197,9 @@ class TecnicosController extends Controller
             ->update ([
                  
                  'idempresa'           => $request->idempresa,
-                 'nombre'              => $request->nombres,
-                 'apaterno'            => $request->apaterno,
-                 'amaterno'            => $request->amaterno,
+                 'nombre'              =>strtoupper ($request->nombres ), 
+                 'apaterno'            => strtoupper ($request->apaterno),
+                 'amaterno'            => strtoupper ($request->amaterno),
                  //'apellidos'           => $request->amaterno+$request->apaterno,
                  'fecha_nacimiento'    => $request->fNacimiento,
                  'sexo'                => $request->sexo,

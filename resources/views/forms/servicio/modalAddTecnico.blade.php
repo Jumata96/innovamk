@@ -4,11 +4,10 @@
 		<h2>LISTA DE TECNICOS</h2>   
 	</div> 
 	<div class="row card-header sub-header"  >
-		
-		<div class="col s12 m12 herramienta">   
-				 
-			<center><h5>TECNICOS</h5></center>  
-		</div>  
+		<div class="col s12 m12 l1  herramienta">    
+			<a href="{{url('tecnicos')}}"  target="_blank" class="btn-floating  waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" data-tooltip="Agregar Tecnico">
+				<i class="material-icons" style="color: #2E7D32">add</i></a>
+		</div>    
 		@include('forms.scripts.modalInformacion')  
 	</div>
 			<div class="row cuerpo">

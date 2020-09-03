@@ -68,6 +68,7 @@
     //console.log("ingreso");
     var datos = []; 
     var latitud , longitud,direccion ;
+    var datosGeo=null;
     
 
     function buscarDireccion() {
@@ -95,9 +96,8 @@
           console.log("error");
           
           } else {  
-           console.log("recupero data ");
-           console.log(data); 
-           if(data.longitud==null ){
+            
+           if(data.longitud==null ||data.longitud=='true' ){
              console.log("esta nulo ")
               //setInterval(buscarDireccion, 3000);
              //intervalo();
@@ -111,6 +111,7 @@
             $('#longitudF').val(longitud );
             $('#modalUpdate').modal('close');
             console.log("se actualiza registro ");
+            datosGeo="cerrar";
            }
            //datos=data;
            //clearInterval(intervalo);
@@ -124,7 +125,16 @@
     }
 
     
-    setInterval(buscarDireccion, 3000);
+    /* setInterval(buscarDireccion, 3000); */
+
+    var id = setInterval(function(){
+      buscarDireccion(); 
+					if(datosGeo =="cerrar") 
+					{
+						clearInterval(id);
+					}
+    	}, 1000); 
+ 
    
  })
   //---JPaiva--12-07-2018---------------VARIOS DATATABLE--------------------

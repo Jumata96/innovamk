@@ -758,6 +758,8 @@ class PerfilesController extends Controller
         $API = new routeros_api();
         $API->debug = false;
         $ARRAY = null;
+        $ARRAY_HIJO =[];
+
 
         $router = DB::table('router')->where('idrouter',$request->idrouter)->get();
 
@@ -772,27 +774,50 @@ class PerfilesController extends Controller
                     $ARRAY = $API->comm("/queue/type/print");
                     $ARRAY2 = $API->comm("/queue/tree/print");
                     $ARRAY3 = $API->comm("/ip/firewall/mangle/print");
+                    $PRUEBA=null;
+
+                    // dd($ARRAY,$ARRAY);
 
                     for ($i=0; $i < count($ARRAY) ; $i++) { 
                         if ($ARRAY[$i]['kind'] == 'pcq') {
-                            foreach ($ARRAY2 as $tree) {
-                                
+                            
+                            foreach ($ARRAY2 as $tree) { 
+                                $PRUEBA[] =$tree;
                                 if ($tree["queue"] == $ARRAY[$i]['name']) {
                                     $ARRAY[$i]['name_tree'] = $tree['name'];
                                     $ARRAY[$i]['packet_mark'] = $tree['packet-mark'];
-                                    $ARRAY[$i]['parent'] = $tree['parent'];
-                                    $packet = $tree['packet-mark'];
+                                    $ARRAY[$i]['parent'] = $tree['parent']; 
+                                    $ARRAY[$i]['queue_type'] = $tree['queue']; 
+                                     //dd($ARRAY[$i]['queue_type']); 
+                                        foreach ($ARRAY2 as $treeB) {
+                                            // echo "entro";  
+                                            if ($tree['queue']== $treeB["parent"] ) {  
+                                                $ARRAY_HIJO[]= $treeB;  // guardamos los hijos 
+                                                foreach ($ARRAY3 as $mangle) {
+                                                    // dd($mangle); 
+                                                    if( isset($mangle["new-packet-mark"]) and $mangle['new-packet-mark']==$treeB['packet-mark']){
+                                                        //  $ARRAY_HIJO[]=$mangle; 
+                                                        $packet = $mangle['connection-mark'];
+                                                        foreach ($ARRAY3 as $mangleB) { 
+                                                            if (isset($mangleB["new-connection-mark"]) and $mangleB["new-connection-mark"] == $packet /* and $mangleB['action'] == "mark-connection" */) {
+                                                                $ARRAY[$i]['address_list'] = $mangleB["src-address-list"]; 
+                                                                // $ARRAY_HIJO[]= $mangleB["src-address-list"] ;  
+                                                            } 
+                                                        } 
+                                                    }   
+                                                }
+                                            } 
+                                        } 
 
-                                    foreach ($ARRAY3 as $mangle) {
-                                        //dd($mangle);
-                                        if (isset($mangle["new-connection-mark"]) and $mangle["new-connection-mark"] == $packet and $mangle['action'] == "mark-connection") {
-                                            $ARRAY[$i]['address_list'] = $mangle["src-address-list"];
-                                        }
-                                    }
+                                   
                                 }
                             }
                         }
+                       
                     }
+                    //dd($PRUEBA);
+                    // dd($ARRAY_HIJO,$ARRAY);
+                     
                     for ($i=0; $i < count($ARRAY) ; $i++) { 
                         if ($ARRAY[$i]['kind'] != 'pcq') {
                             unset($ARRAY[$i]);

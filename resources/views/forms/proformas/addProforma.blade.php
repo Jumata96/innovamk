@@ -34,8 +34,8 @@
 									<div class="card-content" style="padding-bottom: 5px; padding-top: 10px">
 										<span class="card-title">Datos Generales</span>
 										<div class="input-field col s12 m6 l12 "> 
-											<div class="col  s6 m2 l2 left" ><p >	CORRELATIVO :</p></div>
-											<div  class="col  s6 m10 9" ><p style="border-bottom: solid;width:120px ;" >{{ $serie }}-{{$correlativo }}</p></div>
+											<div class="col  s6 m2 l3 left" ><p >CORRELATIVO :</p></div>
+											<div  class="col  s6 m10 l9" ><p style="border-bottom: solid;width:120px ;" >{{ $serie }}-{{$correlativo }}</p></div>
 												
 										</div><br>	<br>					
 										<div class="col s12 m6 l6">                                                                
@@ -59,14 +59,23 @@
 										<div class="input-field col s12 m6 l6">
 											<i class="material-icons prefix active">label_outline</i>
 											@foreach($parametros as $datos)
-											@if($datos->parametro == 'ADD_COD_INTERNO' and $datos->valor == 'SI')
+											@if($datos->parametro == 'ADD_COD_INTERNO' and $datos->valor == 'SI') 
 											<input id="nro_documentoPro" name="nro_documentoPro" type="text" data-error=".errorTxt2" maxlength="20" disabled onkeyup="mayus(this);">
+											<input id="parametro" name="parametro"  value="SI" type="hidden" >
 											@elseif($datos->parametro == 'ADD_COD_INTERNO' and $datos->valor == 'NO')
 											<input id="nro_documentoPro" name="nro_documentoPro" type="text" data-error=".errorTxt2" maxlength="20" onkeyup="mayus(this);">
+											<input id="parametro" name="parametro"  value="NO" type="hidden" >
+
 											@endif
 											@endforeach
 											<label for="nro_documentoPro">Nro. Documento</label>
 											<div id="error2" style="color: red; font-size: 12px; font-style: italic; padding-left: 3rem"></div>
+										</div> 
+										<div class="input-field col s12 m6 l6">
+											<i class="material-icons prefix">perm_identity</i>
+											<input id="apaternoPro" name="apaternoPro" type="text" data-error=".errorTxt4">
+											<label for="apaternoPro">Apellido Paterno</label>
+											<div id="error3" style="color: red; font-size: 12px; font-style: italic; padding-left: 3rem"></div>
 										</div>        
 										
 										<div class="input-field col s12 m6 l6">
@@ -96,18 +105,18 @@
 												@if($val->parametro == 'ADD_MAPA_GPS' and $val->valor == 'SI') 
 												<div class="input-field col s12 m6 l6"  >
 													<i class="material-icons prefix">room</i>
-													<input id="direccionPro" name="direccionPro" type="text" readonly="readonly">
+													<input id="direccionPro"  placeholder="" name="direccionPro" type="text" readonly="readonly">
 													<label for="direccionPro">Dirección</label>
 													<div id="error6" style="color: red; font-size: 12px; font-style: italic; padding-left: 3rem"></div>
 												 </div> 
 												<div class="input-field col s12 m6 l6" readonly="readonly">
 													<i class="material-icons prefix">maps_local</i>
-													<textarea id="latituPro" name="latituPro" class="materialize-textarea" readonly="readonly"></textarea>
+													<textarea id="latituPro" placeholder="" name="latituPro" class="materialize-textarea" readonly="readonly"></textarea>
 													<label for="latituPro" class="">Latitud</label>
 												</div> 
 												<div class="input-field col s12 m6 l6" readonly="readonly">
 													<i class="material-icons prefix">maps_local</i>
-													<textarea id="longituPro" name="longituPro" class="materialize-textarea" readonly="readonly" ></textarea>
+													<textarea id="longituPro" placeholder=""  name="longituPro" class="materialize-textarea" readonly="readonly" ></textarea>
 													<label for="longituPro" class="">Longitud</label>
 												</div>   
 												<div class="col s12"> 
@@ -125,20 +134,15 @@
 										@endforeach  
 										<div class="input-field col s12 m12 l12"  >  
 											<i class="material-icons prefix">assignment</i> 
-											<label for="descripcionPro">Descripción</label>
-											<br> <br> 
+											<label for="descripcionPro">Descripción</label> 
+											<br><br> <div id="error10" style="color: red; font-size: 12px; font-style: italic; padding-left: 3rem">
+											</div> <br>
 												<input type="hidden" id="descripcionPro"  name="descripcionPro" value="COMPROBANTE_CLIENTE">
 												<textarea id="descripcionCkeditor" name="descripcionCkeditor" class="materialize-textarea"></textarea>
 
 											 
 											
-										</div>
-										{{--  <div class="input-field col s12">
-											 <input type="hidden" name="_token" value="{{ csrf_token() }}">         
-											<input type="hidden" name="idplantilla" value="COMPROBANTE_CLIENTE">   
-											<textarea id="descripcionCkeditor" name="descripcionCkeditor" class="materialize-textarea"></textarea>
-										 
-										 </div>  --}}
+										</div> 
 																
 									</div>
 								</div>  
