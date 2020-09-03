@@ -89,9 +89,9 @@ class ServicioController extends Controller
     public function store(Request $request)
     {
          //dd($request);
-        $key = new MaestroController();
-        $codigo = $key->codigoN(10);
-
+        $request->session()->flash('latitud' );
+        $request->session()->flash('longitud' );
+        $request->session()->flash('direccion' );
         $rules = array(            
             'idrouter'          => 'required',
             'tipo_acceso'       => 'required',
@@ -112,6 +112,10 @@ class ServicioController extends Controller
             return response()->json($var);
         }          
         else {
+        
+            $key = new MaestroController();
+            $codigo = $key->codigoN(10);
+    
 
         DB::table('servicio_internet')
             ->insert([
@@ -124,6 +128,8 @@ class ServicioController extends Controller
                 'usuario_cliente'   => $request->usuario_cliente,
                 'contrasena_cliente' => $request->contrasena_cliente,
                 'direccion'         => $request->direccion, 
+                'latitud'              =>$request->latitud,
+                'longitud'             =>$request->longitud,
                 'ip'                => $request->ip,
                 'mac'               => $request->mac,
                 'fecha_instalacion' => Carbon::createFromFormat('d/m/Y', $request->fecha_instalacion),
@@ -138,7 +144,20 @@ class ServicioController extends Controller
                 'idZona'            =>$request->zonas,
                 'parent'            => $request->parent
         ]);
-
+        
+        DB::table('instalacion')
+        ->insert([     
+             
+            'id_servicio'       =>$codigo,
+            'id_cliente'        =>$request->idcliente,
+            'id_tecnico'        =>$request->tecnico, 
+            'direccion'         => $request->direccion,
+            'latitud'           =>$request->latitud,
+            'longitud'          =>$request->longitud,
+            'fecha_instalacion' =>Carbon::createFromFormat('d/m/Y', $request->fecha_instalacion),
+            'estado'	        =>1,
+            'fecha_creacion'    =>date('Y-m-d h:m:s'),
+        ]); 
             /*if (!is_null($request->usuario_receptor)) {
                 DB::table('dequipos')
                 ->insert([
@@ -151,8 +170,7 @@ class ServicioController extends Controller
                     'idusuario'      => Auth::user()->id,
                     'relacion_servicio' => 'PR'
                 ]);
-            }*/
-
+            }*/ 
             $parametros = DB::table('parametros')->whereIn('tipo_parametro',['SISTEMA','CLIENTES','FACTURACION'])->get();
             $dia_facturacion = null;
             $activar_notificacion = null;
@@ -217,6 +235,7 @@ class ServicioController extends Controller
             $ARRAY = null;
            //dd("llego");
            $perfil = DB::table('perfiles')->where('idperfil',$request->perfil_internet)->get();
+        //    dd($perfil);
             foreach ($router as $rou) {
                 //dd($perfil);
                 if ($API->connect($rou->ip , $rou->usuario , $rou->password, $rou->puerto )) {
@@ -255,6 +274,7 @@ class ServicioController extends Controller
                             )); 
                         }else if(trim($request->tipo_acceso) == "PPP"){
                             if ($addLocalIP == 'SI' and $addRemoteIP == 'SI') {
+                                // dd( $request->usuario_cliente,$request->contrasena_cliente,$val->perfil_pppoe,$nombre,$localAddr, );
                                 $ARRAY = $API->comm("/ppp/secret/add", array(
                                     "name"      => $request->usuario_cliente,
                                     "password"  => $request->contrasena_cliente,
@@ -263,7 +283,8 @@ class ServicioController extends Controller
                                     "comment"   => $nombre,
                                     "local-address" => $localAddr,
                                     "remote-address" => $request->ip
-                                ));  
+                                )); 
+                                dd($ARRAY); 
                             }else if($addLocalIP == 'SI'){
                                 $ARRAY = $API->comm("/ppp/secret/add", array(
                                     "name"      => $request->usuario_cliente,
@@ -402,7 +423,6 @@ class ServicioController extends Controller
                     'total'             => $request->precio, 
                     'descripcion'       => $detalle
                 ]);
-                
                 if($request->instalacion=='SI'){
                     $codigoServicio = $key->codigoN(10);
                     DB::table('dfactura')
