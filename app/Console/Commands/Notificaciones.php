@@ -120,6 +120,7 @@ class Notificaciones extends Command
               }
           }
           
+          
           if ($bandera) {
             $idrouter = $serv->idrouter;
             $idperfil = $serv->perfil_internet; 
@@ -131,10 +132,10 @@ class Notificaciones extends Command
             $API = new routeros_api();
             $API->debug = false;
             $ARRAY = null;
-
+            DB::table('prueba2')->insert(["descripcion" => "".$rou->ip." ".$rou->usuario." ".$rou->password, $rou->puerto]);
             foreach ($router as $rou) {
                 if ($API->connect($rou->ip , $rou->usuario , $rou->password, $rou->puerto )) {
-
+                    DB::table('prueba2')->insert(["descripcion" => 'ingreso222222']);
                     $cliente = DB::table('clientes')->where(['idcliente' => $serv->idcliente, 'estado' => 1])->get();
                     $nombre = null;
 
@@ -143,7 +144,7 @@ class Notificaciones extends Command
                     }
 
                     $perfil = DB::table('perfiles')->where('idperfil',$idperfil)->get();
-
+                    
                     foreach ($perfil as $val) {                    
 
                         if( trim($val->idtipo) == "HST" ){ 

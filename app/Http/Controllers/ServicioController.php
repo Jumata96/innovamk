@@ -1334,7 +1334,7 @@ class ServicioController extends Controller
 
                         if( trim($val->idtipo) == "HST" ){ 
                             //Logica por desarrollar
-                                
+                                   
                         }else if(trim($val->idtipo) == "QUE"){
                             $ARRAY = $API->comm("/ip/firewall/address-list/add", array(
                                 "list"      => 'Notificacion::InnovaTec',  
@@ -1544,5 +1544,38 @@ class ServicioController extends Controller
         //dd($rango);
         
         return response()->json($rango);   
+    } 
+    public function buscarPcq(){
+
+        $API = new routeros_api();
+        $API->debug = false;
+        $ARRAY = null;
+        $ARRAY_HIJO =[];
+
+
+        $router = DB::table('router')->where('idrouter','R01')->get();
+        // dd($router);
+        foreach ($router as $rou) {
+            if ($API->connect($rou->ip , $rou->usuario , $rou->password, $rou->puerto )) {
+
+                $ARRAY = $API->comm("/ip/firewall/mangle/print");   
+            }
+        }
+        foreach($ARRAY  as $valor){
+            if(isset($valor['src-address-list']) ){
+                array_push($ARRAY_HIJO,[
+                    'address'        => $valor['src-address-list']
+                    
+                ]); 
+
+            }
+
+        }
+        
+
+        dd($ARRAY_HIJO);
+
+
+         
     }    
 }

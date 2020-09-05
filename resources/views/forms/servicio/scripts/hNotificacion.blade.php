@@ -33,7 +33,7 @@
                   M.toast({ html: '<span>Aviso en pantalla activado</span>'});
                 }, 2000); 
 
-                setTimeout("redireccionarPagina()",4000);
+                 setTimeout("redireccionarPagina()",4000);
               }
                 
 

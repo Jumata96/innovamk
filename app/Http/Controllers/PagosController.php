@@ -65,15 +65,51 @@ class PagosController extends Controller
         $parametros = DB::table('parametros')
             ->whereIn('tipo_parametro',['FACTURACION'])
             ->where('estado',1)->get();
+        
+
+        $fechaVencimiento ;
+        /* dd($fechaVencimiento); */
+
 
         foreach ($factura as $value) {
             $idcliente = $value->idcliente;
+            $fechaVencimiento=$value->fecha_vencimiento;
         }
+        
 
         $cliente = DB::table('clientes')->where('idcliente',$idcliente)->get();
         $servicio = DB::table('servicio_internet')->where('idcliente',$idcliente)->get();
         $dfactura = DB::table('dfactura')->where('idfactura',$id)->get();
 
+       /*  $fecha_actual = new \DateTime();
+        $fecha_actual = date_format($fecha_actual,'y-m-d'); */
+       /*  $fechaVencimiento = date_format($fechaVencimiento,'y-m-d'); */
+
+        
+        $fecha_pago = null;
+        $fecha_corte = null;
+        $fecha_actual = new \DateTime(); 
+        $dia =(int) date_format($fecha_actual,'d');
+        $mes = (int) date_format($fecha_actual,'m');
+        $year = (int) date_format($fecha_actual,'Y');
+        $fecha_validar = new \DateTime($fechaVencimiento);
+        $diaN = (int) date_format($fecha_validar,'d');
+        $mesN = (int) date_format($fecha_validar,'m');
+        $yearN = (int) date_format($fecha_validar,'Y');
+        $bandera = false;
+        if ($mes == $mesN and $year == $yearN) {
+            if ($dia >= $diaN) {
+              $bandera = true;
+            }
+        }else if ($mes > $mesN and $year >= $yearN) {
+            dd("ingresa");
+            if ($dia >= $diaN) {
+              $bandera = true;
+            }
+        }
+
+
+        // dd($dia,$mes,$year,$diaN,$mesN,$yearN,$bandera);  
         if(Auth::user()->idtipo == 'CLE'){
             return view('clientes.pagos.vwComprobante',[
                 'factura'       => $factura,
@@ -94,6 +130,7 @@ class PagosController extends Controller
             'factura'       => $factura,
             'cliente'       => $cliente,
             'doc_venta'     => $doc_venta,
+            'bandera'       =>$bandera,
             'documento'     => $documento,
             'forma_pagos'   => $forma_pagos,
             'moneda'        => $moneda,

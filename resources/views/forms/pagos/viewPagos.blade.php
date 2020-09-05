@@ -25,13 +25,20 @@
             <a style="margin-left: 6px"></a>
             <a href="{{url('/descargarPDF')}}/{{$datos->codigo}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" data-tooltip="Descargar PDF">
             <i class="material-icons grey-text text-darken-2">vertical_align_bottom</i></a>
+            @if($bandera)
+            <a href="#modalPromesa" class=" modal-trigger btn-floating waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" data-tooltip="Agregar Promesa">
+              <i class="material-icons grey-text text-darken-2">add</i></a>
+
+            @endif
             <a href="{{url('/pagos')}}" class="btn-floating right waves-effect waves-light grey lighten-5 tooltipped" href="#!" data-activates="dropdown2" data-position="top" data-delay="500" data-tooltip="Regresar">
             <i class="material-icons " style="color: #424242">keyboard_tab</i></a>
           </div>
         </div>   
-        @include('forms.pagos.addPago')
+        @include('forms.pagos.addPago') 
+
         @include('forms.pagos.scripts.alertaConfirmacion')  
-        <form class="formValidate right-alert" id="frmPago" accept-charset="UTF-8" enctype="multipart/form-data">   
+        <form class="formValidate right-alert" id="frmPago" accept-charset="UTF-8" enctype="multipart/form-data">  
+          @include('forms.pagos.addPromesaPago') 
         <div class="row">
     <br>      
           <div class="col s12 m12 l12">
@@ -251,4 +258,6 @@
   @include('forms.pagos.scripts.validacion')
   @include('forms.pagos.scripts.aceptar')
   @include('forms.pagos.scripts.rechazar')
+  @include('forms.pagos.scripts.addPromesaPago')
+
 @endsection

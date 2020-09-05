@@ -168,16 +168,15 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('/servicio/desabilitar','ServicioController@disabled');
 	Route::post('/servicio/habilitar','ServicioController@habilitar');
 	Route::post('/getQueues','MaestroController@getQueues');
-	//instalaciones
+	//----------------herramienta de importar perfiles pcq
+	Route::get('/buscarPcq','ServicioController@buscarPcq');
+	//------------------------------------------ 
+	//instalaciones 
 	Route::get('/instalaciones','InstalacionesController@index');
 	Route::get('/instalaciones/nuevo','InstalacionesController@create');  
 
 	Route::get('/instalaciones/tecnico/listado','InstalacionesController@instalacionesPorTecnico');
-	Route::get('/instalaciones/tecnicos/mostrar/{id}','InstalacionesController@show_tecnicos');
-
-
-	
-
+	Route::get('/instalaciones/tecnicos/mostrar/{id}','InstalacionesController@show_tecnicos'); 
 
 	Route::get('/instalaciones/detalle/{id}','ServicioController@detalleInstalacion');
 
@@ -326,6 +325,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::delete('/grupo/enable/{id}', 'GrupoController@enable');
 	Route::get('/grupo/listaSelect', 'GrupoController@listSelect');
 	Route::get('/grupo/buscar/{id}', 'GrupoController@buscar');
+	
 
 	//MARCA
 	Route::get('/marca', 'MarcaController@index');
