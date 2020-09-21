@@ -375,7 +375,12 @@ class MaestroController extends Controller
           'idrouter'  => $request->idrouter,
           'estado'    => 1
       ])->get();
+    /*   $tipos=count($tipo);
+      dd($tipo);
+      foreach($tipo as $acceso){
 
+      }
+ */
       return response()->json($tipo);
     }
 

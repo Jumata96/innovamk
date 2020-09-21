@@ -78,31 +78,31 @@
                                      <td><?php echo $datos->usuario ?></td>
                                      <td><?php echo $datos->email ?></td>
                                      <td><?php echo $datos->created_at ?></td>
-                                     <td style="width: 12rem">
+                                     <td style="width: 6rem">
                                         @if($datos->estado == 0)
-                                        <div id="estado" class="chip center-align" style="width: 70%">
+                                        <div id="estado" class="badge grey darken-2 white-text text-accent-5 center center">
                                             <b>NO DISPONIBLE</b>
                                           <i class="material-icons"></i>
                                         </div>
                                       @else
-                                        <div id="estado2" class="chip center-align teal accent-4 white-text" style="width: 70%">
+                                        <div id="estado2" class="badge green lighten-5 green-text text-accent-4 center">
                                           <b>ACTIVO</b>
                                           <i class="material-icons"></i>
                                         </div>
                                       @endif
                                      </td>
-                                     <td class="center" style="width: 9rem">
-                                       <a href="{{ url('/usuario/mostrar') }}/{{$datos->id}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" data-tooltip="Ver">
+                                     <td class="center" style="width: 10rem">
+                                       <a href="{{ url('/usuario/mostrar') }}/{{$datos->id}}" class="tooltipped" data-position="top" data-delay="500" data-tooltip="Ver">
                                         <i class="material-icons" style="color: #7986cb ">visibility</i>
                                       </a>                                       
-                                       <a href="#confirmacion{{$i}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Eliminar">
+                                       <a href="#confirmacion{{$i}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Eliminar">
                                         <i class="material-icons" style="color: #dd2c00">remove</i>
                                       </a>
                                       @if($datos->estado == 1)                                      
-                                       <a href="#confirmacion2{{$datos->id}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Desabilitar">
+                                       <a href="#confirmacion2{{$datos->id}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Desabilitar">
                                         <i class="material-icons" style="color: #757575 ">clear</i></a>
                                        @else
-                                       <a href="#confirmacion3{{$datos->id}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Habilitar">
+                                       <a href="#confirmacion3{{$datos->id}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Habilitar">
                                         <i class="material-icons" style="color: #2e7d32 ">check</i></a>
                                        @endif
                                      </td>

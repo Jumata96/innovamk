@@ -5,11 +5,11 @@
 @foreach($servicio as $datos)
 <br>
 <div class="row">
-  <div class="col s12 m12 l12">
+  <div class="col s12 m12 l8 offset-l2">
                 <div class="card">
                   <div class="card-header">                    
                     <i class="fa fa-table fa-lg material-icons">receipt</i>
-                    <h2>REGISTRO DE SERVICIO</h2>
+                    <h2>ACTUALIZAR DE SERVICIO</h2>
                   </div>
                   <form class="formValidate right-alert">
                     <div class="row card-header sub-header">
@@ -60,13 +60,13 @@
 
                                                   <div class="input-field col s12 s12 m4 l right-align">
                                                       @if($datos->estado == 0)
-                                                        <div id="u_estado" class="chip center-align" style="width: 70%">
-                                                            <b>Estado:</b> <b>NO DISPONIBLE</b>
+                                                        <div id="u_estado" class="chip center-align" style="width: 100%">
+                                                             <b>NO DISPONIBLE</b>
                                                           <i class="material-icons"></i>
                                                         </div>
                                                       @else
-                                                        <div id="u_estado2" class="chip center-align teal accent-4 white-text" style="width: 70%">
-                                                          <b>Estado:</b>    <b>ACTIVO</b>
+                                                        <div id="u_estado2" class="chip center-align teal accent-4 white-text" style="width:100%">
+                                                              <b>ACTIVO</b>
                                                           <i class="material-icons"></i>
                                                         </div>
                                                       @endif
@@ -76,7 +76,7 @@
                                         </div>                                       
                       </div>  
 
-                      <div class="col s12 m12 l6">
+                      <div class="col s12 m12 l12 ">
                           <div class="card white">
                                             <div class="card-content">                                               
                                               <span class="card-title">Datos Generales</span>
@@ -156,19 +156,19 @@
 
                                                 <div class="input-field col s12 s12 m6 l6">
                                                   <i class="material-icons prefix">maps_local</i>
-                                                  <input id="latitudSU" name="latitudSU" type="text" value="{{$datos->latitud}}" readonly="readonly" >
+                                                  <input id="latitudSU" placeholder="" name="latitudSU" type="text" value="{{$datos->latitud}}" readonly="readonly" >
                                                   <label for="latitudSU">Incorporar latitud</label>
                                                 </div> 
                                                 <div class="input-field col s12 m6 l6"> 
                                                   <i class="material-icons prefix">maps_local</i>
-                                                  <input id="longitudSU" name="longitudSU" type="text" value="{{ $datos->longitud }}" readonly="readonly" >
+                                                  <input id="longitudSU" placeholder="" name="longitudSU" type="text" value="{{ $datos->longitud }}" readonly="readonly" >
                                                   <label for="longitudSU">Incorporar longitud</label> 
                                                 </div> 
                                               </div>
                                               <div class="row">
                                                 <div class="input-field col s12 m6 l12"> 
                                                   <i class="material-icons prefix">room</i>
-                                                  <input id="direccionSU"  readonly="readonly" name="direccionSU" type="text" value="{{ $datos->direccion }}">
+                                                  <input id="direccionSU" placeholder=""  readonly="readonly" name="direccionSU" type="text" value="{{ $datos->direccion }}">
                                                   <label for="direccionSU">Dirección</label> 
                                                 </div>                        
                                               </div> 
@@ -179,87 +179,10 @@
                                                   
                                                 </div> 
                                                                         
-                                              </div>
-                                                      
-                                                  
+                                              </div> 
                                             </div>
                     </div>
-                  </div>
-
-                  <div class="col s12 m12 l6">
-                <div class="card white">
-                                            <div class="card-content">
-                                              <span class="card-title">Datos técnicos</span>
-
-                                              <div class="row">
-                                                <div class="input-field col s12 s12 m6 l6">
-                                                  <i class="material-icons prefix">insert_invitation</i>
-                                                  <input id="fecha_instalacion" name="fecha_instalacion" type="text" class="datepicker" placeholder="dd/mm/AAAA" value="{{ date_format(date_create($datos->fecha_instalacion),'d/m/Y') }}">
-                                                  <label for="fecha_instalacion">Fecha de Instalación</label>
-                                                </div>   
-                                                
-                                                 <div class="col s12 m6 l6">
-                                                    <label for="emisor_conectado">Equipo Emisor</label>
-                                                    <select class="browser-default" id="emisor_conectado" name="emisor_conectado" data-error=".errorTxt1" > 
-                                                      <option value="" disabled="" selected="">Seleccione un equipo</option>
-                                                      @foreach ($eqemisor as $valor)
-                                                        @if($valor->idequipo == $datos->emisor_conectado)
-                                                          <option value="{{ $valor->idequipo }}" selected>{{ $valor->descripcion }}</option>
-                                                        @else
-                                                          <option value="{{ $valor->idequipo }}">{{ $valor->descripcion }}</option>
-                                                        @endif
-                                                      @endforeach
-                                                    </select>
-                                                    <div class="errorTxt1" style="color: red; font-size: 12px; font-style: italic;"></div>
-                                                  </div>                               
-                                              </div>           
-                                              <div class="row">
-                                                <div class="col s12 m6 l6">
-                                                    <label for="equipo_receptor">Equipo Receptor</label>
-                                                    <select class="browser-default" id="equipo_receptor" name="equipo_receptor" data-error=".errorTxt1" > 
-                                                      <option value="" disabled="" selected="">Equipo Cliente Receptor</option>
-                                                      @foreach ($eqreceptor as $valor)
-                                                        @if($valor->idequipo == $datos->equipo_receptor)
-                                                          <option value="{{ $valor->idequipo }}" selected>{{ $valor->descripcion }}</option>
-                                                        @else
-                                                          <option value="{{ $valor->idequipo }}">{{ $valor->descripcion }}</option>
-                                                        @endif
-                                                      @endforeach
-                                                    </select>
-                                                    <div class="errorTxt1"></div>
-                                                  </div>            
-
-                                                <div class="input-field col s12 s12 m6 l6">
-                                                  <i class="material-icons prefix">settings_ethernet</i>
-                                                  <input id="ip_receptor" name="ip_receptor" type="text" placeholder="" value="{{$datos->ip_receptor}}">
-                                                  <label for="ip_receptor">IP equipo receptor</label>
-                                                </div>                        
-                                              </div>           
-                                              <div class="row">
-                                                <div class="input-field col s12 s12 m6 l6">
-                                                  <i class="material-icons prefix">portrait</i>
-                                                  <input id="usuario_receptor" name="usuario_receptor" type="text" placeholder="" value="{{$datos->usuario_receptor}}">
-                                                  <label for="usuario_receptor">Usuario Equipo Receptor</label>
-                                                </div>
-
-                                                <div class="input-field col s12 s12 m6 l6">
-                                                  <i class="material-icons prefix">vpn_key</i>
-                                                  <input id="contrasena_receptor" name="contrasena_receptor" type="text" placeholder="" value="{{$datos->contrasena_receptor}}">
-                                                  <label for="contrasena_receptor">Contraseña Equipo Receptor</label>
-                                                </div>         
-                                              </div>
-                                              <div class="row">
-                                                <div class="input-field col s12 m6 l6">
-                                                  <i class="material-icons prefix">mode_edit</i>
-                                                  <textarea id="glosa" name="glosa" class="materialize-textarea" lenght="200" maxlength="200" style="height: 80px;">{{$datos->glosa}}</textarea>
-                                                  <label for="glosa" class="">Comentario</label>
-                                                </div>            
-                                              </div>
-                                            </div>
-                                        </div>  
-                                    </div>                        
-                   
-
+                  </div> 
                   </form>
               </div>
   </div>

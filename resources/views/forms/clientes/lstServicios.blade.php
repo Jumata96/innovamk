@@ -67,12 +67,12 @@
                                     <td><?php echo $valor->dia_pago ?></td>
                                     <td style="width: 9rem">
                                     @if($valor->estado == 0)
-                                    <div id="u_estado" class="chip center-align" style="width: 80%">
+                                    <div id="u_estado" class="badge grey darken-2 white-text text-accent-5 center">
                                             <b>NO DISPONIBLE</b>
                                           <i class="material-icons"></i>
                                     </div>
                                     @else
-                                        <div id="u_estado2" class="chip center-align teal accent-4 white-text" style="width: 80%">
+                                        <div id="u_estado2" class="badge green lighten-5 green-text text-accent-4 center">
                                           <b>ACTIVO</b>
                                           <i class="material-icons"></i>
                                         </div>
@@ -80,24 +80,25 @@
                                      </td>
                                      
                                      <td class="center" style="width: 12rem">
-                                       <a href="{{ url('/servicio/mostrar') }}/{{$valor->idservicio}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" data-tooltip="Ver">
+                                       <a href="{{ url('/servicio/mostrar') }}/{{$valor->idservicio}}" class="tooltipped" data-position="top" data-delay="500" data-tooltip="Ver">
                                         <i class="material-icons" style="color: #7986cb ">visibility</i></a>                                       
-                                       <a href="#alterServicio{{$i}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Eliminar">
+                                       <a href="#alterServicio{{$i}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Eliminar">
                                         <i class="material-icons" style="color: #ef9a9a ">delete</i></a>
                                       @if($valor->estado == 1)                                      
-                                       <a href="#s_confirmacion2{{$valor->idservicio}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Desabilitar">
+                                       <a href="#s_confirmacion2{{$valor->idservicio}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Desabilitar">
                                         <i class="material-icons" style="color: #757575 ">clear</i></a>
                                        @else
-                                       <a href="#s_confirmacion3{{$valor->idservicio}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Habilitar">
+                                       <a href="#s_confirmacion3{{$valor->idservicio}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Habilitar">
                                         <i class="material-icons" style="color: #2e7d32 ">check</i></a>
                                        @endif
                                        @if($valor->activar_notificacion == 1)                                      
-                                        <a href="#s_confirmacion5{{$valor->idservicio}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Desactivar aviso en pantalla">
+                                        <a href="#s_confirmacion5{{$valor->idservicio}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Desactivar aviso en pantalla">
                                         <i class="material-icons" style="color: #dd2c00">remove</i></a>
                                        @else
-                                       <a href="#s_confirmacion4{{$valor->idservicio}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Activar aviso en pantalla">
+                                       <a href="#s_confirmacion4{{$valor->idservicio}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Activar aviso en pantalla">
                                         <i class="material-icons" style="color: #26a69a  ">done</i></a>                                       
                                        @endif
+                                    
                                      </td>
                                   </tr>
                                   @include('forms.servicio.scripts.alertaConfirmacion')
@@ -105,6 +106,7 @@
                                   @include('forms.servicio.scripts.alertaConfirmacion3')
                                   @include('forms.servicio.scripts.alertaConfirmacion4')
                                   @include('forms.servicio.scripts.alertaConfirmacion5')
+                                  @include('forms.servicio.scripts.alertaConfirmacion6')
                                   <?php } ?>
                                </tbody>
                             </table>
@@ -179,19 +181,19 @@
                                     <td>{{$equipo->ip}}</td>
                                     <td>
                                     @if($equipo->idestado == 'AS')
-                                      <div id="u_estado2" class="chip center-align teal accent-4 white-text" style="width: 70%">
+                                      <div id="u_estado2" class="badge green lighten-5 green-text text-accent-4 center" >
                                           <b>ASIGNADO</b>
                                           <i class="material-icons"></i>
                                       </div>
                                     @else
 
                                       @if ($equipo->modo == 'EMISOR')
-                                            <div id="u_estado2" class="chip center-align teal accent-4 white-text" style="width: 70%">
+                                            <div id="u_estado2" class="badge green lighten-5 green-text text-accent-4 center" >
                                               <b>CONECTADO</b>
                                               <i class="material-icons"></i>
                                           </div>
                                       @else 
-                                          <div id="u_estado" class="chip center-align" style="width: 70%">
+                                          <div id="u_estado" class="badge grey darken-2 white-text text-accent-5 center" >
                                             <b>SIN ASIGNAR</b>
                                           <i class="material-icons"></i>
                                       </div>  
@@ -200,12 +202,12 @@
                                     </td>
                                      
                                      <td class="center" style="width: 12rem">
-                                       <a href="{{ url('/equipos/mostrar') }}/{{$equipo->idequipo}}" target="_blank" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" data-tooltip="Ver">
+                                       <a href="{{ url('/equipos/mostrar') }}/{{$equipo->idequipo}}" target="_blank" class="tooltipped" data-position="top" data-delay="500" data-tooltip="Ver">
                                         <i class="material-icons" style="color: #7986cb ">visibility</i></a>   
                                       @if($equipo->facturado == "NO")          
-                                       <a href="#vwNewComprobante" id="newComprobante{{$equipo->idequipo}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Nuevo comprobante" data-precio="{{$equipo->costo}}" data-idequipo="{{$equipo->idequipo}}" data-descripcion="{{$equipo->descripcion}}" data-idservicio="{{$equipo->idservicio}}">
+                                       <a href="#vwNewComprobante" id="newComprobante{{$equipo->idequipo}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Nuevo comprobante" data-precio="{{$equipo->costo}}" data-idequipo="{{$equipo->idequipo}}" data-descripcion="{{$equipo->descripcion}}" data-idservicio="{{$equipo->idservicio}}">
                                         <i class="material-icons" style="color: #00897b  ">playlist_add</i></a>             
-                                       <a href="#vwComprobante" id="addComprobante{{$equipo->idequipo}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Agregar a comprobante PE" data-precio="{{$equipo->costo}}" data-idequipo="{{$equipo->idequipo}}" data-idservicio="{{$equipo->idservicio}}">
+                                       <a href="#vwComprobante" id="addComprobante{{$equipo->idequipo}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Agregar a comprobante PE" data-precio="{{$equipo->costo}}" data-idequipo="{{$equipo->idequipo}}" data-idservicio="{{$equipo->idservicio}}">
                                         <i class="material-icons" style="color: #ffd54f ">autorenew</i></a>     
                                       @endif
                                        
@@ -303,10 +305,10 @@
                                     <td>{{$item->fecha_creacion}}</td>
                                     <td>{{$item->descripcion}}</td> 
                                     <td class="center" style="width: 12rem"> 
-                                        <a href="{{asset('documentosAdj/')}}/{{$item->carpeta}}/{{$item->nombre}}" download="{{$item->nombre}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" data-tooltip="descargar">
+                                        <a href="{{asset('documentosAdj/')}}/{{$item->carpeta}}/{{$item->nombre}}" download="{{$item->nombre}}" class="tooltipped" data-position="top" data-delay="500" data-tooltip="descargar">
                                           <i class="material-icons grey-text text-darken-4">vertical_align_bottom</i>
                                         </a>
-                                        <a href="#confirmacion{{$item->iddocumento}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Eliminar">
+                                        <a href="#confirmacion{{$item->iddocumento}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Eliminar">
                                           <i class="material-icons" style="color: #ef9a9a ">delete</i></a>
                                     </td> 
                                    

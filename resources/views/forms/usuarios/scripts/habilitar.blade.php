@@ -37,16 +37,16 @@
                 "<td>"+ obj[0]['email'] +"</td>"+
                 "<td>"+ obj[0]['created_at'] +"</td>"+
                 "<td class='center'>"+
-                    "<div id='estado2' class='chip center-align teal accent-4 white-text' style='width: 70%'>"+
+                    "<div id='estado2' class='badge green lighten-5 green-text text-accent-4 center' "+
                       "<b>ACTIVO</b>"+
                       "<i class='material-icons'></i>"+
                     "</div>"+
                 "</td>"+
                 "<td class='center' style='width: 9rem'>"+
-                  "<a href='#updUsuario' id='upd"+obj[0]['id']+"' class='btn-floating waves-effect waves-light grey lighten-5 tooltipped' data-position='top' data-delay='500' data-tooltip='Ver'><i class='material-icons' style='color: #7986cb'>visibility</i></a>"+                                     
-                  " <a href='#confirmacion"+ obj[0]['id'] +"' class='btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger' data-position='top' data-delay='500' data-tooltip='Eliminar'><i class='material-icons' style='color: #dd2c00'>remove</i></a>"+
+                  "<a href='#updUsuario' id='upd"+obj[0]['id']+"' class='tooltipped' data-position='top' data-delay='500' data-tooltip='Ver'><i class='material-icons' style='color: #7986cb'>visibility</i></a>"+                                     
+                  " <a href='#confirmacion"+ obj[0]['id'] +"' class='tooltipped modal-trigger' data-position='top' data-delay='500' data-tooltip='Eliminar'><i class='material-icons' style='color: #dd2c00'>remove</i></a>"+
 
-                  " <a href='#confirmacion2"+ obj[0]['id'] +"' class='btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger' data-position='top' data-delay='500' data-tooltip='Desabilitar'><i class='material-icons' style='color: #757575'>clear</i></a>"+
+                  " <a href='#confirmacion2"+ obj[0]['id'] +"' class='tooltipped modal-trigger' data-position='top' data-delay='500' data-tooltip='Desabilitar'><i class='material-icons' style='color: #757575'>clear</i></a>"+
                 "</td>"
                 );}
                 

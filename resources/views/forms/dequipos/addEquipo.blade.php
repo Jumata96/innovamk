@@ -132,12 +132,12 @@
                                                                  <td><input id='precio{{$i}}' name='precio{{$i}}' type='number' class='right-align input_numerico' style='margin: 0; height: 2rem; width: 80%'></td>
                                                                  <td class="center">
                                                                     @if($valor->estado == 0)
-                                                                    <div class="chip center-align" style="width: 100%">
+                                                                    <div class="badge grey darken-2 white-text text-accent-5 center">
                                                                         <b>NO DISPONIBLE</b>
                                                                       <i class="material-icons"></i>
                                                                     </div>
                                                                   @else
-                                                                    <div class="chip center-align teal accent-4 white-text" style="width: 100%">
+                                                                    <div class="badge green lighten-5 green-text text-accent-4 center">
                                                                       <b>ACTIVO</b>
                                                                       <i class="material-icons"></i>
                                                                     </div>

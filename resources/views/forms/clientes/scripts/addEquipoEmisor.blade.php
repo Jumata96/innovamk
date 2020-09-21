@@ -73,7 +73,7 @@
 
                      "<td><input id='precio"+idRouter+"' name='precio"+idRouter+"' type='number' class='right-align input_numerico'"+ "style='margin: 0; height: 2rem; width: 80%'></td>"+
                      "<td class='center'>"+
-                      "<div class='chip center-align teal accent-4 white-text' style='width: 100%'>"+
+                      "<div class='badge green lighten-5 green-text text-accent-4 center' style='width: 100%'>"+
                         "<b>ACTIVO</b>"+
                         "<i class='material-icons'></i>"+
                       "</div>"+

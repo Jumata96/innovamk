@@ -68,27 +68,27 @@
                                      <td class="center">{{ date_format(date_create($datos->fecha_vencimiento),'d/m/Y') }}</td>
                                      <td>
                                         @if($datos->idestado == 'EM')
-                                        <div class="chip center-align red lighten-1 white-text" style="width: 80%">
+                                        <div class="badge red lighten-5 red-text text-accent-4 center">
                                           <b>PENDIENTE</b>
                                           <i class="material-icons"></i>
                                         </div>
                                         @elseif($datos->idestado == 'PA')
-                                        <div class="chip center-align green lighten-1 white-text" style="width: 80%">
+                                        <div class="badge green lighten-5 green-text text-accent-4 center">
                                           <b>PAGADO</b>
                                           <i class="material-icons"></i>
                                         </div>
                                         @elseif($datos->idestado == 'PV')
-                                        <div class="chip center-align amber accent-2 white-text" style="width: 80%">
+                                        <div class="badge amber lighten-5 amber-text text-accent-4 center">
                                           <b>VERIFICANDO</b>
                                           <i class="material-icons"></i>
                                         </div>
                                         @endif
                                      </td>
                                      <td class="center">
-                                       <a href="{{ url('/pagos/detalle') }}/{{$datos->codigo}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" data-tooltip="Ver">
+                                       <a href="{{ url('/pagos/detalle') }}/{{$datos->codigo}}" class="tooltipped" data-position="top" data-delay="500" data-tooltip="Ver">
                                         <i class="material-icons" style="color: #7986cb ">visibility</i>
                                       </a> 
-                                      <a href="{{url('/descargarPDF')}}/{{$datos->codigo}}" target="_blank" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" data-tooltip="Descargar PDF">
+                                      <a href="{{url('/descargarPDF')}}/{{$datos->codigo}}" target="_blank" class="tooltipped" data-position="top" data-delay="500" data-tooltip="Descargar PDF">
                                         <i class="material-icons grey-text text-darken-2">vertical_align_bottom</i>
                                       </a>
                                      </td>

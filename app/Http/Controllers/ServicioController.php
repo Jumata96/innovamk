@@ -42,7 +42,11 @@ class ServicioController extends Controller
 
         $servicio = DB::table('servicio_internet')->get();
         $router = DB::table('router')->get();
+
         $tipo = DB::table('tipo_acceso')->get();
+        // dd($tipo);
+
+
         $queues = DB::table('queues')->get();
         $eqemisor = DB::table('equipos')->where('idmodo',$idemisor)->get();
         $eqreceptor = DB::table('equipos')->where('idmodo',$idreceptor)->get();
@@ -114,9 +118,7 @@ class ServicioController extends Controller
         else {
         
             $key = new MaestroController();
-            $codigo = $key->codigoN(10);
-    
-
+            $codigo = $key->codigoN(10); 
         DB::table('servicio_internet')
             ->insert([
                 'idempresa'         => '001',
@@ -232,10 +234,8 @@ class ServicioController extends Controller
         
             $API = new routeros_api();
             $API->debug = false;
-            $ARRAY = null;
-           //dd("llego");
-           $perfil = DB::table('perfiles')->where('idperfil',$request->perfil_internet)->get();
-        //    dd($perfil);
+            $ARRAY = null; 
+           $perfil = DB::table('perfiles')->where('idperfil',$request->perfil_internet)->get(); 
             foreach ($router as $rou) {
                 //dd($perfil);
                 if ($API->connect($rou->ip , $rou->usuario , $rou->password, $rou->puerto )) {
@@ -315,8 +315,7 @@ class ServicioController extends Controller
                         }
                     }                
                 }       
-            }
-            //dd($perfil);
+            } 
             
 
             if($request->facturable =='SI'){
@@ -610,8 +609,8 @@ class ServicioController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
-    {
-       // dd($request);
+    {  
+        //dd($request);
         $request->session()->flash('latitud' );
         $request->session()->flash('longitud' );
         $request->session()->flash('direccion' );
@@ -637,18 +636,14 @@ class ServicioController extends Controller
             $idperfil = null;
             $idequipo = null;
 
-            $servicio = DB::table('servicio_internet')->where('idservicio',$request->idservicio)->get();
-            
-
-            foreach ($servicio as $val) {
+            $servicio = DB::table('servicio_internet')->where('idservicio',$request->idservicio)->get(); 
+            /* foreach ($servicio as $val) {
                 $usuario = $val->usuario_cliente;
                 $idperfil = $val->tipo_acceso;
                 $idequipo = $val->usuario_receptor;
 
                 DB::table('dequipos')->where(['idequipo' => $val->equipo_receptor,'idservicio' => $val->idservicio])->delete();
-            }
-
-            
+            } */ 
             DB::table('servicio_internet')
             ->where('idservicio',$request->idservicio)
             ->update([      
@@ -661,21 +656,21 @@ class ServicioController extends Controller
                 'latitud'           => $request->latitudSU,
                 'longitud'          => $request->longitudSU, 
                 'ip'                => $request->ip,
-                'mac'               => $request->mac,
                 'dia_pago'          => $request->dia_pago,
                 'precio'            => $request->precio,
-                'fecha_instalacion' => Carbon::createFromFormat('d/m/Y', $request->fecha_instalacion),
-                'emisor_conectado'  => $request->emisor_conectado,
-                'equipo_receptor'   => $request->equipo_receptor,
-                'ip_receptor'       => $request->ip_receptor,
-                'usuario_receptor'  => $request->usuario_receptor,
-                'contrasena_receptor'   => $request->contrasena_receptor, 
                 'idcliente'         => $request->idcliente,
                 'idZona'            =>$request->zonas,
-                'glosa'             => $request->glosa
+                // 'glosa'             => $request->glosa
+                // 'mac'               => $request->mac,
+                // 'fecha_instalacion' => Carbon::createFromFormat('d/m/Y', $request->fecha_instalacion),
+                // 'emisor_conectado'  => $request->emisor_conectado,
+                // 'equipo_receptor'   => $request->equipo_receptor,
+                // 'ip_receptor'       => $request->ip_receptor,
+                // 'usuario_receptor'  => $request->usuario_receptor,
+                // 'contrasena_receptor'   => $request->contrasena_receptor,  
             ]);
 
-            if (!is_null($request->usuario_receptor)) {
+           /*  if (!is_null($request->usuario_receptor)) {
                 DB::table('dequipos')
                 ->insert([
                     'idequipo'       => $request->equipo_receptor,
@@ -687,8 +682,80 @@ class ServicioController extends Controller
                     'idusuario'      => Auth::user()->id,
                     'relacion_servicio' => 'PR'
                 ]);   
-            }
+         } */
+         $parametrosCliente = DB::table('parametros')->where('tipo_parametro','CLIENTES')->get();
+             
+         $activar_notificacion = null;
+         $aviso = 0;
+         $corte = 0;
+         $frecuencia_corte = 0;  
+         foreach ($parametrosCliente as $parametro) {
+             if ($parametro->parametro == 'ACTIVAR_NOTIFICA') {
+                 $activar_notificacion = $parametro->valor;
+             }else if ($parametro->parametro == 'ADD_INICIO_AVISO') {
+                 $aviso = $parametro->valor_long;
+             }else if ($parametro->parametro == 'ADD_APLICAR_CORTE') {
+                 $corte = $parametro->valor_long;
+             }else if ($parametro->parametro == 'ADD_FREC_CORTE') {
+                 $frecuencia_corte = $parametro->valor_long;
+             }
+         }
+          
+         $fecha_pago = $request->dia_pago;
+         $fecha_corte = null;
+ 
+         $fecha_actual = new \DateTime(); 
+         $dia =(int) date_format($fecha_actual,'d');
+         $mes = (int) date_format($fecha_actual,'m');
+         $year = (int) date_format($fecha_actual,'Y');
+ 
+         // $fecha_validar = new \DateTime($dia_pago);
+         $fecha_validar = Carbon::now()->day($request->dia_pago);
+        
+         $diaN = (int) date_format($fecha_validar,'d');
+         $mesN = (int) date_format($fecha_validar,'m');
+         $yearN = (int) date_format($fecha_validar,'Y');
+         $bandera = false;//dia de pago es mayor al dia de pago actual
+         //$bandera = true-> dia de pago es menor que fecha actual
+         
+         if ($mes == $mesN and $year == $yearN) {
+             if ($dia >= $diaN) {
+               $bandera = true;
+             }
+         }else if ($mes > $mesN and $year >= $yearN) {
+             if ($dia >= $diaN) {
+               $bandera = true;
+             }
+         }
+         if($bandera){
+             //fecha_pago es menor  a lafecha actual
+                 $dia_pago = Carbon::now()->addMonth()->day($request->dia_pago);
+                 $fecha_aviso = Carbon::now()->addMonth()->day($request->dia_pago)->subDays($aviso);
+                 $fecha_corte = Carbon::now()->addMonth()->day($request->dia_pago)->addDays($corte); 
+         }else{
+             //fecha es mayor a la fecha actual
+                 $dia_pago =Carbon::now()->day($request->dia_pago) ;
+                 $fecha_aviso = Carbon::now()->day($request->dia_pago)->subDays($aviso);
+                 $fecha_corte = Carbon::now()->day($request->dia_pago)->addDays($corte); 
+         }
+        //  dd($bandera,"pago-".$dia_pago,"aviso".$fecha_aviso,"corte".$fecha_corte,"facturacion".$fecha_facturacion);
+         DB::table('notificaciones')
+            ->where('idservicio',$request->idservicio)
+            ->update([      
+                'fecha_pago'    =>$dia_pago,
+                'fecha_corte'   => $fecha_corte,
+                'fecha_aviso'   => $fecha_aviso
+            ]);
+
+
+
+
+                    
             
+
+
+
+
             
             $servicio = DB::table('servicio_internet')->where('idservicio',$request->idservicio)->get();
             $idcliente = null;
@@ -696,12 +763,11 @@ class ServicioController extends Controller
                 $idcliente = $value->idcliente;
             }
             DB::table('clientes')->where('idcliente',$idcliente)
-            ->update(['dia_pago' => $request->dia_pago]);
+            ->update(['dia_pago' => $request->dia_pago]); 
 
 
-            //Se actualiza el estado a ASIGNADO en la tabla Equipos
-            DB::table('equipos')->where('idequipo',$request->equipo_receptor)
-            ->update(['idestado' => 'AS']);
+            // DB::table('equipos')->where('idequipo',$request->equipo_receptor)
+            // ->update(['idestado' => 'AS']);
 
             $cliente = DB::table('clientes')->where('idcliente',$request->idcliente)->get();
             $nombre = null;
@@ -1551,29 +1617,68 @@ class ServicioController extends Controller
         $API->debug = false;
         $ARRAY = null;
         $ARRAY_HIJO =[];
+        $ARRAY_ADDRESS_LIST =[];
+        $ARRAY_prueba =[];
+        $bandera=0;
+        // $tipos =[];
 
-
-        $router = DB::table('router')->where('idrouter','R01')->get();
-        // dd($router);
-        foreach ($router as $rou) {
-            if ($API->connect($rou->ip , $rou->usuario , $rou->password, $rou->puerto )) {
-
-                $ARRAY = $API->comm("/ip/firewall/mangle/print");   
-            }
-        }
-        foreach($ARRAY  as $valor){
-            if(isset($valor['src-address-list']) ){
-                array_push($ARRAY_HIJO,[
-                    'address'        => $valor['src-address-list']
-                    
-                ]); 
-
+        $tipos  = DB::table('tipo_acceso')->whereIn('dsc_corta',['PCQ','PPP'])->get();
+        foreach ($tipos as $tipo) {
+            if($tipo->estado==1){
+                $bandera++ ;
             }
 
         }
+        //  dd($bandera);
+         if($bandera==2){  
+                $router = DB::table('router')->where('idrouter','R01')->get();
+
+                // dd($router);
+                foreach ($router as $rou) {
+                    if ($API->connect($rou->ip , $rou->usuario , $rou->password, $rou->puerto )) {
+
+                        $ARRAY = $API->comm("/ip/firewall/mangle/print");  
+                        $ARRAY_ADDRESS_LIST=$API->comm("/ip/firewall/address-list/print"); 
+                    }
+                }
+                // dd($ARRAY_ADDRESS_LIST);
+                foreach($ARRAY  as $valor){
+                    if(isset($valor['src-address-list']) ){
+                        array_push($ARRAY_HIJO,[
+                            'address'        => $valor['src-address-list'] 
+                        ]); 
+                        foreach($ARRAY_ADDRESS_LIST  as $list){
+                            if(  isset($list['list']) and $valor['src-address-list']== $list['list']){
+                                //dd($list);
+                                $ip_address=$list['address'];
+                                
+                                array_push($ARRAY_prueba,[
+                                    'ip'=>$list['address'],
+                                    'nombre' =>$list['comment']
+                                ]);
+                            // dd($valor,$list,$ip_address);
+                                DB::table('servicio_internet')
+                                ->where('ip',"".$ip_address)
+                                ->update([      
+                                    'plan_pcq'   => $valor['src-address-list'], 
+                                ]);
+
+
+
+                            } 
+                        } 
+                    } 
+                }
+        }else{
+            array_push($ARRAY_prueba,[
+                'Eroor'=>"Solo esta seleccionado un tipo de acceso no es PPP Y PCQ"
+            ]);
+
+        }
+
         
 
-        dd($ARRAY_HIJO);
+        dd($ARRAY_prueba);
 
 
          

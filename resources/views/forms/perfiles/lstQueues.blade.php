@@ -76,27 +76,27 @@
                                      <td><?php echo $valor->target ?></td>
                                      <td class="center">
                                         @if($valor->estado == 0)
-                                        <div class="chip center-align" style="width: 70%">
+                                        <div class="badge grey darken-2 white-text text-accent-5 center">
                                             <b>NO DISPONIBLE</b>
                                           <i class="material-icons"></i>
                                         </div>
                                       @else
-                                        <div class="chip center-align teal accent-4 white-text" style="width: 70%">
+                                        <div class="badge green lighten-5 green-text text-accent-4 center">
                                           <b>ACTIVO</b>
                                           <i class="material-icons"></i>
                                         </div>
                                       @endif
                                      </td>
                                      <td class="center" style="width: 9rem">
-                                       <a href="#updQueues" id="upd{{$valor->idperfil}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Ver" data-id="{{$valor->idperfil}}" data-idrouter="{{$valor->idrouter}}" data-name="{{$valor->name}}" data-vbajada="{{$valor->vbajada}}" data-precio="{{$valor->precio}}" data-vsubida="{{$valor->vsubida}}" data-glosa="{{$valor->glosa}}" data-idrouter="{{$valor->idrouter}}" data-estado="{{$valor->estado}}">
+                                       <a href="#updQueues" id="upd{{$valor->idperfil}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Ver" data-id="{{$valor->idperfil}}" data-idrouter="{{$valor->idrouter}}" data-name="{{$valor->name}}" data-vbajada="{{$valor->vbajada}}" data-precio="{{$valor->precio}}" data-vsubida="{{$valor->vsubida}}" data-glosa="{{$valor->glosa}}" data-idrouter="{{$valor->idrouter}}" data-estado="{{$valor->estado}}">
                                         <i class="material-icons" style="color: #7986cb ">visibility</i></a>                                       
-                                       <a href="#confirmacion{{$valor->idperfil}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Eliminar">
+                                       <a href="#confirmacion{{$valor->idperfil}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Eliminar">
                                         <i class="material-icons" style="color: #dd2c00">remove</i></a> 
                                        @if($valor->estado == 1)                                      
-                                       <a href="#confirmacion2{{$valor->idperfil}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Desabilitar">
+                                       <a href="#confirmacion2{{$valor->idperfil}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Desabilitar">
                                         <i class="material-icons" style="color: #757575 ">clear</i></a>
                                        @else
-                                       <a href="#confirmacion3{{$valor->idperfil}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Habilitar">
+                                       <a href="#confirmacion3{{$valor->idperfil}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Habilitar">
                                         <i class="material-icons" style="color: #2e7d32 ">check</i></a>
                                        @endif
                                      </td>

@@ -102,7 +102,7 @@ class PagosController extends Controller
               $bandera = true;
             }
         }else if ($mes > $mesN and $year >= $yearN) {
-            dd("ingresa");
+           // dd("ingresa");
             if ($dia >= $diaN) {
               $bandera = true;
             }

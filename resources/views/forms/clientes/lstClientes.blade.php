@@ -38,11 +38,8 @@
                         </div>  
                         @include('forms.scripts.modalInformacion')  
                         @include('forms.clientes.frmCorte')       
-                  </div>
-                                    
-                  <div class="row cuerpo">
-                    
-                  
+                  </div>        
+                  <div class="row cuerpo"> 
                   <div class="row">
                     <div class="col s12 m12 l12">
                       

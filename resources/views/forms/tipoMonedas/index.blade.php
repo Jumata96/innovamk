@@ -47,25 +47,25 @@
            <td v-text="moneda.descripcion"></td>
            <td v-text="moneda.dsc_corta"></td>
            <td v-text="moneda.fecha_creacion"></td>
-            <td v-if="moneda.estado == 1"><div id="estado2" class="chip center-align teal accent-4 white-text" style="width: 70%">
+            <td v-if="moneda.estado == 1"><div id="estado2" class=" badge green lighten-5 green-text text-accent-4" style="width: 70%">
               <b>ACTIVO</b>
               <i class="material-icons"></i>
             </div></td>
-            <td v-if="moneda.estado == 2"><div id="estado" class="chip center-align" style="width: 70%">
+            <td v-if="moneda.estado == 2"><div id="estado" class="badge grey darken-2 white-text text-accent-5" style="width: 70%">
               <b>INACTIVO</b>
               <i class="material-icons"></i>
             </div></td>
            <td>
-             <a class="btn-floating waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" title="Editar" v-on:click.prevent="edit(moneda)">
+             <a class="tooltipped" data-position="top" data-delay="500" title="Editar" v-on:click.prevent="edit(moneda)">
              <i class="material-icons" style="color: #7986cb">visibility</i>
              </a>
-             <a class="btn-floating waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" title="Eliminar" v-on:click.prevent="deleteMoneda(moneda)">
+             <a class="tooltipped" data-position="top" data-delay="500" title="Eliminar" v-on:click.prevent="deleteMoneda(moneda)">
              <i class="material-icons" style="color: #dd2c00">remove</i>
              </a>
-             <a v-if="moneda.estado == 2" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" title="Habilitar" v-on:click.prevent="enableMoneda(moneda)">
+             <a v-if="moneda.estado == 2" class="tooltipped" data-position="top" data-delay="500" title="Habilitar" v-on:click.prevent="enableMoneda(moneda)">
              <i class="material-icons" style="color: #2e7d32">check</i>
              </a>
-             <a v-else class="btn-floating waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" title="Dehabilitar" v-on:click.prevent="disableMoneda(moneda)">
+             <a v-else class="tooltipped" data-position="top" data-delay="500" title="Dehabilitar" v-on:click.prevent="disableMoneda(moneda)">
              <i class="material-icons" style="color: #757575">clear</i>
              </a>
             

@@ -131,7 +131,7 @@
                                       @endif
                                      </td>
                                      <td class="center hide">
-                                       <a href="{{ url('/cliente/') }}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" data-tooltip="Ver">
+                                       <a href="{{ url('/cliente/') }}" class="tooltipped" data-position="top" data-delay="500" data-tooltip="Ver">
                                         <i class="material-icons" style="color: #7986cb ">visibility</i></a>
                                      </td>
                                   </tr>

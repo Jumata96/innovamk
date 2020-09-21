@@ -168,8 +168,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('/servicio/desabilitar','ServicioController@disabled');
 	Route::post('/servicio/habilitar','ServicioController@habilitar');
 	Route::post('/getQueues','MaestroController@getQueues');
-	//----------------herramienta de importar perfiles pcq
-	Route::get('/buscarPcq','ServicioController@buscarPcq');
+	
 	//------------------------------------------ 
 	//instalaciones 
 	Route::get('/instalaciones','InstalacionesController@index');
@@ -179,10 +178,6 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/instalaciones/tecnicos/mostrar/{id}','InstalacionesController@show_tecnicos'); 
 
 	Route::get('/instalaciones/detalle/{id}','ServicioController@detalleInstalacion');
-
-
-	
-
 
 	//Notificaciones
 	Route::post('/notificaciones/actualizar','ServicioController@updateNotificaciones');
@@ -546,6 +541,9 @@ Route::get('/validarComprobante','MaestroController@validarComprobante');
 Route::get('/eliminarComprobantesDuplicados','MaestroController@eliminarComprobantesDuplicados');
 Route::get('/eliminarComprobantesPagadosDuplicados','MaestroController@eliminarComprobantesPagadosDuplicados');
 Route::get('/validarFechaCorte','MaestroController@validarFechaCorte');
+
+//----------------herramienta apoyo
+Route::get('/buscarPcq','ServicioController@buscarPcq');
 
 
 

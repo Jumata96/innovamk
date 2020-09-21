@@ -36,15 +36,15 @@
                 "<td>"+ obj[0]['email'] +"</td>"+
                 "<td>"+ obj[0]['created_at'] +"</td>"+
                 "<td class='center' style='width: 9rem'>"+
-                    "<div id='estado' class='chip center-align' style='width: 70%'>"+
+                    "<div id='estado' class='badge grey darken-2 white-text text-accent-5'  >"+
                       "<b>NO DISPONIBLE</b>"+
                       "<i class='material-icons'></i>"+
                     "</div>"+
                 "</td>"+
                 "<td class='center'>"+
-                  "<a href='#updQueues' id='upd"+obj[0]['id']+"' class='btn-floating waves-effect waves-light grey lighten-5 tooltipped' data-position='top' data-delay='500' data-tooltip='Ver'><i class='material-icons' style='color: #7986cb'>visibility</i></a>"+                                     
-                  " <a href='#confirmacion"+ obj[0]['id'] +"' class='btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger' data-position='top' data-delay='500' data-tooltip='Eliminar'><i class='material-icons' style='color: #dd2c00'>remove</i></a>"+
-                  " <a href='#confirmacion3"+ obj[0]['id'] +"' class='btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger' data-position='top' data-delay='500' data-tooltip='Habilitar'><i class='material-icons' style='color: #2e7d32'>check</i></a>"+
+                  "<a href='#updQueues' id='upd"+obj[0]['id']+"' class=' tooltipped' data-position='top' data-delay='500' data-tooltip='Ver'><i class='material-icons' style='color: #7986cb'>visibility</i></a>"+                                     
+                  " <a href='#confirmacion"+ obj[0]['id'] +"' class=' tooltipped modal-trigger' data-position='top' data-delay='500' data-tooltip='Eliminar'><i class='material-icons' style='color: #dd2c00'>remove</i></a>"+
+                  " <a href='#confirmacion3"+ obj[0]['id'] +"' class=' tooltipped modal-trigger' data-position='top' data-delay='500' data-tooltip='Habilitar'><i class='material-icons' style='color: #2e7d32'>check</i></a>"+
                 "</td>"
                 );}
                 

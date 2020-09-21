@@ -69,23 +69,23 @@
                                      <td>{{$datos->usuarios}}</td>
                                      <td>
                                         @if($datos->estado == 0)
-                                        <div id="u_estado" class="chip center-align" style="width: 70%">
+                                        <div id="u_estado" class="badge grey darken-2 white-text text-accent-5 center" >
                                             <b>NO DISPONIBLE</b>
                                           <i class="material-icons"></i>
                                         </div>
                                       @else
-                                        <div id="u_estado2" class="chip center-align teal accent-4 white-text" style="width: 70%">
+                                        <div id="u_estado2" class="badge green lighten-5 green-text text-accent-4 center" >
                                           <b>ACTIVO</b>
                                           <i class="material-icons"></i>
                                         </div>
                                       @endif
                                      </td>
                                      <td class="center" style="width: 9rem">
-                                       <a href="{{ url('/fichas') }}/{{$datos->idfichas}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped" data-position="top" data-delay="500" data-tooltip="Ver">
+                                       <a href="{{ url('/fichas') }}/{{$datos->idfichas}}" class="tooltipped" data-position="top" data-delay="500" data-tooltip="Ver">
                                         <i class="material-icons" style="color: #7986cb ">visibility</i></a>                                       
-                                       <a href="#confirmacion{{$i}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Eliminar">
+                                       <a href="#confirmacion{{$i}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Eliminar">
                                         <i class="material-icons" style="color: #dd2c00">remove</i></a>
-                                       <a href="#vwGFichas" id="genFichas{{$datos->idfichas}}" class="btn-floating waves-effect waves-light grey lighten-5 tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Ver" data-id="{{$datos->idfichas}}">
+                                       <a href="#vwGFichas" id="genFichas{{$datos->idfichas}}" class="tooltipped modal-trigger" data-position="top" data-delay="500" data-tooltip="Ver" data-id="{{$datos->idfichas}}">
                                         <i class="material-icons" style="color: black ">vertical_align_bottom</i></a>     
                                      </td>
                                   </tr>
